@@ -1,0 +1,576 @@
+﻿Player,Team,Pos,Gls_p90,Ast_p90,G+A_p90,PosGroup,Is_Attacker,Is_Defender
+Nuno Lima,Alanya,DF,0.0,0.0,0.0,DF,False,True
+Ertuğrul Taşkıran,Alanya,GK,0.0,0.0,0.0,GK,False,False
+Gaius Makouta,Alanya,MF,0.0,0.0,0.0,MF,True,True
+Ümit Akdag,Alanya,DF,0.09,0.0,0.09,DF,False,True
+Fidan Aliti,Alanya,DF,0.0,0.0,0.0,DF,False,True
+Yusuf Özdemir,Alanya,MF,0.1,0.1,0.2,MF,True,True
+Maestro,Alanya,MF,0.11,0.11,0.21,MF,True,True
+Uchenna Ogundu,Alanya,FW,0.26,0.13,0.39,FW,True,False
+İbrahim Kaya,Alanya,"MF,FW",0.28,0.0,0.28,MF,True,True
+Hwang Ui-jo,Alanya,"MF,FW",0.14,0.14,0.28,MF,True,True
+Ianis Hagi,Alanya,"MF,FW",0.34,0.17,0.51,MF,True,True
+Ruan,Alanya,MF,0.0,0.0,0.0,MF,True,True
+Florent Hadergjonaj,Alanya,MF,0.21,0.21,0.42,MF,True,True
+Enes Keskin,Alanya,MF,0.0,0.25,0.25,MF,True,True
+Nicolas Janvier,Alanya,MF,0.0,0.0,0.0,MF,True,True
+Güven Yalçın,Alanya,MF,0.45,0.0,0.45,MF,True,True
+Bruno Viana,Alanya,DF,0.0,0.0,0.0,DF,False,True
+Andraž Šporar,Alanya,FW,0.0,0.0,0.0,FW,True,False
+Meschak Elia,Alanya,MF,0.0,0.0,0.0,MF,True,True
+Steve Mounié,Alanya,FW,0.0,0.0,0.0,FW,True,False
+İzzet Çelik,Alanya,MF,0.0,0.0,0.0,MF,True,True
+Efecan Karaca,Alanya,"FW,MF",0.0,0.0,0.0,FW,True,False
+Fatih Aksoy,Alanya,"DF,MF",0.0,0.0,0.0,DF,False,True
+Mert Furkan Bayram,Alanya,GK,,,,GK,False,False
+Rony Lopes,Alanya,"FW,MF",,,,FW,True,False
+Baran Mogultay,Alanya,DF,,,,DF,False,True
+Bedirhan Özyurt,Alanya,DF,,,,DF,False,True
+Arda Usluoğlu,Alanya,FW,,,,FW,True,False
+Paulo Victor Vidotti,Alanya,GK,,,,GK,False,False
+Opponent Total,Alanya,NAN,1.0,0.75,,NAN,False,False
+Kenneth Paal,Antalya,DF,0.0,0.0,0.0,DF,False,True
+Georgi Dzhikiya,Antalya,DF,0.18,0.0,0.18,DF,False,True
+Abdülkadir Ömür,Antalya,MF,0.0,0.11,0.11,MF,True,True
+Bünyamin Balcı,Antalya,DF,0.0,0.2,0.2,DF,False,True
+Sander van de Streek,Antalya,"MF,FW",0.0,0.25,0.25,MF,True,True
+Lautaro Gianetti,Antalya,DF,0.0,0.11,0.11,DF,False,True
+Soner Dikmen,Antalya,MF,0.25,0.0,0.25,MF,True,True
+Nikola Storm,Antalya,"MF,FW",0.25,0.13,0.38,MF,True,True
+Jesper Ceesay,Antalya,"MF,DF",0.0,0.0,0.0,MF,True,True
+Julián Cuesta,Antalya,GK,0.0,0.0,0.0,GK,False,False
+Abdullah Yiğiter,Antalya,GK,0.0,0.0,0.0,GK,False,False
+Tomáš Čvančara,Antalya,FW,0.17,0.0,0.17,FW,True,False
+Ramzi Safouri,Antalya,MF,0.0,0.19,0.19,MF,True,True
+Yohan Boli,Antalya,FW,0.52,0.26,0.79,FW,True,False
+Dario Šarić,Antalya,MF,0.0,0.0,0.0,MF,True,True
+Güray Vural,Antalya,"MF,FW",0.65,0.0,0.65,MF,True,True
+Veysel Sarı,Antalya,DF,0.0,0.38,0.38,DF,False,True
+Hasan İlçin,Antalya,MF,0.0,0.0,0.0,MF,True,True
+Jakub Kałuziński,Antalya,MF,0.0,0.0,0.0,MF,True,True
+Samuel Ballet,Antalya,MF,0.0,0.0,0.0,MF,True,True
+Samet Karakoç,Antalya,DF,0.0,0.0,0.0,DF,False,True
+Doğukan Sınık,Antalya,MF,0.0,0.0,0.0,MF,True,True
+Bachir Gueye,Antalya,FW,2.0,0.0,2.0,FW,True,False
+Bahadır Öztürk,Antalya,DF,0.0,0.0,0.0,DF,False,True
+Engin Yıldırım,Antalya,FW,0.0,0.0,0.0,FW,True,False
+Hüseyin Türkmen,Antalya,DF,0.0,0.0,0.0,DF,False,True
+Mert Yilmaz,Antalya,"DF,MF",0.0,0.0,0.0,DF,False,True
+Kerem Kayaarası,Antalya,FW,0.0,0.0,0.0,FW,True,False
+Ali Demirbilek,Antalya,FW,0.0,0.0,0.0,FW,True,False
+Alp Abay,Antalya,NAN,,,,NAN,False,False
+Kagan Arican,Antalya,GK,,,,GK,False,False
+Mehmet Dadakdeniz,Antalya,GK,,,,GK,False,False
+Ege Izmirli,Antalya,DF,,,,DF,False,True
+Berkay Topdemir,Antalya,FW,,,,FW,True,False
+Opponent Total,Antalya,NAN,,,,NAN,False,False
+Eldor Shomurodov,Basaksehir,"FW,MF",0.69,0.09,0.77,FW,True,False
+Jerome Opoku,Basaksehir,DF,0.0,0.0,0.0,DF,False,True
+Muhammed Şengezer,Basaksehir,GK,0.0,0.0,0.0,GK,False,False
+Crespo,Basaksehir,"MF,FW",0.0,0.43,0.43,MF,True,True
+Christopher Operi,Basaksehir,"DF,MF",0.0,0.0,0.0,DF,False,True
+Berat Özdemir,Basaksehir,"MF,DF",0.0,0.0,0.0,MF,True,True
+Yusuf Sari,Basaksehir,MF,0.0,0.14,0.14,MF,True,True
+Festy Ebosele,Basaksehir,DF,0.0,0.0,0.0,DF,False,True
+Léo Duarte,Basaksehir,DF,0.0,0.0,0.0,DF,False,True
+Olivier Kemen,Basaksehir,MF,0.0,0.17,0.17,MF,True,True
+Nuno da Costa,Basaksehir,"MF,FW",0.34,0.0,0.34,MF,True,True
+Ousseynou Ba,Basaksehir,DF,0.0,0.0,0.0,DF,False,True
+Umut Güneş,Basaksehir,MF,0.0,0.0,0.0,MF,True,True
+Deniz Turuc,Basaksehir,MF,0.0,0.19,0.19,MF,True,True
+Onur Bulut,Basaksehir,DF,0.0,0.0,0.0,DF,False,True
+Ömer Ali Şahiner,Basaksehir,"DF,MF",0.0,0.0,0.0,DF,False,True
+Ivan Brnić,Basaksehir,MF,0.5,0.0,0.5,MF,True,True
+Amine Harit,Basaksehir,MF,0.0,0.31,0.31,MF,True,True
+Jakub Kałuziński,Basaksehir,MF,0.0,0.0,0.0,MF,True,True
+Onur Ergün,Basaksehir,MF,0.0,0.7,0.7,MF,True,True
+Abbosbek Fayzullayev,Basaksehir,MF,0.0,0.0,0.0,MF,True,True
+Hamza Güreler,Basaksehir,DF,0.0,0.0,0.0,DF,False,True
+Deniz Dilmen,Basaksehir,GK,0.0,0.0,0.0,GK,False,False
+Davie Selke,Basaksehir,FW,0.0,0.0,0.0,FW,True,False
+Ömer Faruk Beyaz,Basaksehir,MF,0.0,0.0,0.0,MF,True,True
+Bertuğ Yıldırım,Basaksehir,FW,0.0,0.0,0.0,FW,True,False
+Doğan Alemdar,Basaksehir,GK,,,,GK,False,False
+Berkay Aslan,Basaksehir,MF,,,,MF,True,True
+Volkan Babacan,Basaksehir,GK,,,,GK,False,False
+Luca Stančič,Basaksehir,GK,,,,GK,False,False
+Opponent Total,Basaksehir,NAN,0.83,0.67,,NAN,False,False
+Tammy Abraham,Besiktas,FW,0.51,0.1,0.61,FW,True,False
+Wilfred Ndidi,Besiktas,MF,0.11,0.0,0.11,MF,True,True
+Rafa Silva,Besiktas,MF,0.55,0.11,0.66,MF,True,True
+Orkun Kökçü,Besiktas,MF,0.0,0.22,0.22,MF,True,True
+Mert Günok,Besiktas,GK,0.0,0.0,0.0,GK,False,False
+Emir Topçu,Besiktas,DF,0.13,0.0,0.13,DF,False,True
+Václav Černý,Besiktas,MF,0.16,0.64,0.8,MF,True,True
+El Bilal Touré,Besiktas,"MF,FW",0.27,0.27,0.54,MF,True,True
+Tiago Djaló,Besiktas,DF,0.14,0.0,0.14,DF,False,True
+Gökhan Sazdağı,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+David Jurásek,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Ohis Felix Uduokhai,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Rıdvan Yılmaz,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Gabriel Paulista,Besiktas,DF,0.0,0.2,0.2,DF,False,True
+Ersin Destanoğlu,Besiktas,GK,0.0,0.0,0.0,GK,False,False
+Cengiz Ünder,Besiktas,MF,0.78,0.26,,MF,True,True
+Jonas Svensson,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Milot Rashica,Besiktas,MF,0.0,0.25,0.25,MF,True,True
+Salih Uçan,Besiktas,MF,0.0,0.0,0.0,MF,True,True
+Devrim Şahin,Besiktas,MF,0.0,0.0,0.0,MF,True,True
+Demir Ege Tıknaz,Besiktas,MF,0.0,0.46,0.46,MF,True,True
+Kartal Yılmaz,Besiktas,MF,0.0,0.0,0.0,MF,True,True
+João Mário,Besiktas,MF,0.0,0.0,0.0,MF,True,True
+Taylan Bulut,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Necip Uysal,Besiktas,MF,0.0,0.0,0.0,MF,True,True
+Ernest Muçi,Besiktas,MF,0.0,0.0,0.0,MF,True,True
+Jota Silva,Besiktas,FW,0.76,0.0,0.76,FW,True,False
+Mustafa Hekimoğlu,Besiktas,FW,0.0,0.0,0.0,FW,True,False
+Serkan Terzi,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Tayyib Talha Sanuç,Besiktas,DF,0.0,0.0,0.0,DF,False,True
+Keny Arroyo,Besiktas,MF,,,,MF,True,True
+Emre Bilgin,Besiktas,GK,,,,GK,False,False
+Amir Hadžiahmetović,Besiktas,MF,,,,MF,True,True
+Emrecan Uzunhan,Besiktas,MF,,,,MF,True,True
+Opponent Total,Besiktas,NAN,,0.67,,NAN,False,False
+Robin Yalçın,Eyupspor,DF,0.0,0.0,0.0,DF,False,True
+Kerem Demirbay,Eyupspor,MF,0.0,0.0,0.0,MF,True,True
+Marcos Felipe,Eyupspor,GK,0.0,0.0,0.0,GK,False,False
+Nihad Mujakić,Eyupspor,DF,0.0,0.0,0.0,DF,False,True
+Luccas Claro,Eyupspor,DF,0.0,0.0,0.0,DF,False,True
+Serdar Gürler,Eyupspor,"MF,FW",0.0,0.0,0.0,MF,True,True
+Lucas Calegari,Eyupspor,"DF,MF",0.0,0.12,0.12,DF,False,True
+Yalçın Kayan,Eyupspor,MF,0.0,0.27,0.27,MF,True,True
+Mame Baba Thiam,Eyupspor,FW,0.24,0.0,0.24,FW,True,False
+Denis Drăguș,Eyupspor,"MF,FW",0.0,0.0,0.0,MF,True,True
+Svit Sešlar,Eyupspor,"MF,FW",0.17,0.17,0.35,MF,True,True
+Halil Akbunar,Eyupspor,"MF,FW",0.22,0.0,0.22,MF,True,True
+Umut Meraş,Eyupspor,"DF,MF",0.0,0.0,0.0,DF,False,True
+Mateusz Łęgowski,Eyupspor,MF,0.0,0.26,0.26,MF,True,True
+Prince Obeng Ampem,Eyupspor,MF,0.23,0.0,0.23,MF,True,True
+Umut Bozok,Eyupspor,FW,0.34,0.0,0.34,FW,True,False
+Emre Akbaba,Eyupspor,MF,0.0,0.0,0.0,MF,True,True
+Melih Kabasakal,Eyupspor,MF,0.0,0.0,0.0,MF,True,True
+Berke Özer,Eyupspor,GK,0.0,0.0,0.0,GK,False,False
+Talha Ulvan,Eyupspor,DF,0.0,0.0,0.0,DF,False,True
+Taras Stepanenko,Eyupspor,MF,0.0,0.0,0.0,MF,True,True
+Ilter Tashkin,Eyupspor,MF,0.0,0.0,0.0,MF,True,True
+Emir Ortakaya,Eyupspor,DF,0.0,0.0,0.0,DF,False,True
+Metehan Altunbaş,Eyupspor,FW,0.0,0.0,0.0,FW,True,False
+Mete-Kaan Demir,Eyupspor,FW,0.0,0.0,0.0,FW,True,False
+Hamza Akman,Eyupspor,MF,,,,MF,True,True
+Cengiz Köseer,Eyupspor,GK,,,,GK,False,False
+Gilbert Mendy,Eyupspor,DF,,,,DF,False,True
+Halil Yeral,Eyupspor,GK,,,,GK,False,False
+Jankat Yilmaz,Eyupspor,GK,,,,GK,False,False
+Opponent Total,Eyupspor,NAN,,0.91,,NAN,False,False
+Atakan Çankaya,Fatihkaragumruk,DF,0.09,0.09,0.18,DF,False,True
+Ivo Grbić,Fatihkaragumruk,GK,0.0,0.0,0.0,GK,False,False
+Jure Balkovec,Fatihkaragumruk,DF,0.0,0.0,0.0,DF,False,True
+Daniel Johnson,Fatihkaragumruk,MF,0.11,0.23,0.34,MF,True,True
+Tiago Çukur,Fatihkaragumruk,"MF,FW",0.12,0.0,0.12,MF,True,True
+Anıl Çınar,Fatihkaragumruk,DF,0.14,0.0,0.14,DF,False,True
+Sergio Antonio De Luiz Junior,Fatihkaragumruk,"MF,FW",0.14,0.0,0.14,MF,True,True
+Berkay Özcan,Fatihkaragumruk,MF,0.0,0.15,0.15,MF,True,True
+Andre Gray,Fatihkaragumruk,FW,0.0,0.0,0.0,FW,True,False
+Sam Larsson,Fatihkaragumruk,MF,0.2,0.41,0.61,MF,True,True
+Marius Doh,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Muhammed Kadıoğlu,Fatihkaragumruk,DF,0.0,0.0,0.0,DF,False,True
+Barış Kalayci,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+David Datro Fofana,Fatihkaragumruk,FW,0.74,0.0,0.74,FW,True,False
+Çağtay Kurukalıp,Fatihkaragumruk,DF,0.0,0.34,0.34,DF,False,True
+Ahmet Sivri,Fatihkaragumruk,"MF,FW",0.0,0.0,0.0,MF,True,True
+Matías Kranevitter,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Ricardo Esgaio,Fatihkaragumruk,"DF,MF",0.0,0.0,0.0,DF,False,True
+Enzo Roco,Fatihkaragumruk,DF,0.0,0.0,0.0,DF,False,True
+Tarık Kalpaklı,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Fatih Kuruçuk,Fatihkaragumruk,DF,0.0,0.0,0.0,DF,False,True
+Nikoloz Ugrekhelidze,Fatihkaragumruk,DF,0.0,0.0,0.0,DF,False,True
+João Pedro Gomes Camacho,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Alper Demirol,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Ömer Gümüş,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Tuğbey Akgün,Fatihkaragumruk,MF,0.0,0.0,0.0,MF,True,True
+Furkan Bekleviç,Fatihkaragumruk,GK,,,,GK,False,False
+Burhan Ersoy,Fatihkaragumruk,MF,,,,MF,True,True
+Kerem Özmen,Fatihkaragumruk,MF,,,,MF,True,True
+Kerem Yandal,Fatihkaragumruk,GK,,,,GK,False,False
+Opponent Total,Fatihkaragumruk,NAN,,,3.0,NAN,False,False
+Date,Fatihkaragumruk,COMP,,,,COMP,False,False
+Milan Škriniar,fenerbahce,DF,0.1,0.1,0.1,DF,False,True
+Jayden Oosterwolde,fenerbahce,DF,0.0,0.0,0.0,DF,False,True
+Youssef En-Nesyri,fenerbahce,FW,1.0,1.0,0.0,FW,True,False
+Nélson Semedo,fenerbahce,"DF,MF",0.2,0.2,0.2,DF,False,True
+Archie Brown,fenerbahce,DF,0.0,0.0,0.2,DF,False,True
+İsmail Yüksek,fenerbahce,MF,0.2,0.2,0.4,MF,True,True
+Ederson,fenerbahce,GK,0.0,0.0,0.0,GK,False,False
+Kerem Aktürkoğlu,fenerbahce,"FW,MF",,0.9,0.2,FW,True,False
+Marco Asensio,fenerbahce,"MF,FW",0.1,0.1,0.2,MF,True,True
+Talisca,fenerbahce,MF,0.3,0.3,0.9,MF,True,True
+Nene Dorgeles,fenerbahce,"FW,DF",0.1,0.1,0.5,FW,True,False
+Fred,fenerbahce,MF,0.4,0.4,0.1,MF,True,True
+Edson Álvarez,fenerbahce,MF,0.0,0.0,0.0,MF,True,True
+Sebastian Szymański,fenerbahce,"MF,FW",0.1,0.1,0.4,MF,True,True
+Oğuz Aydın,fenerbahce,FW,0.0,0.0,0.0,FW,True,False
+Çağlar Söyüncü,fenerbahce,DF,0.0,0.0,0.0,DF,False,True
+Levent Mercan,fenerbahce,DF,,,,DF,False,True
+İrfan Kahveci,fenerbahce,"MF,FW",0.0,0.0,0.0,MF,True,True
+Jáder Durán,fenerbahce,FW,0.2,0.2,0.1,FW,True,False
+İrfan Can Eğribayat,fenerbahce,GK,,,,GK,False,False
+Mert Müldür,fenerbahce,DF,,,,DF,False,True
+Tarık Çetin,fenerbahce,GK,,,,GK,False,False
+Sofyan Amrabat,fenerbahce,MF,,,,MF,True,True
+Yusuf Akçiçek,fenerbahce,DF,,,,DF,False,True
+Dominik Livaković,fenerbahce,GK,,,,GK,False,False
+Bartuğ Elmaz,fenerbahce,MF,,,,MF,True,True
+Cenk Tosun,fenerbahce,MF,0.0,0.0,0.0,MF,True,True
+Cengiz Ünder,fenerbahce,"FW,MF",,,,FW,True,False
+Rodrigo Becão,fenerbahce,DF,,,,DF,False,True
+Alexander Djiku,fenerbahce,"DF,MF",,,,DF,False,True
+Engin Biterge,fenerbahce,GK,,,,GK,False,False
+Yiğit Efe Demir,fenerbahce,DF,,,,DF,False,True
+Mert Yandaş,fenerbahce,MF,,,,MF,True,True
+Abdülkerim Bardakcı,Galatasayar,DF,0.2,0.2,0.0,DF,False,True
+Roland Sallai,Galatasayar,"DF,FW",0.1,0.1,0.2,DF,False,True
+Lucas Torreira,Galatasayar,MF,0.1,0.1,0.0,MF,True,True
+Leroy Sané,Galatasayar,"FW,MF",0.4,0.4,,FW,True,False
+Davinson Sánchez,Galatasayar,DF,0.1,0.1,0.0,DF,False,True
+Barış Alper Yılmaz,Galatasayar,"FW,MF",0.8,0.8,0.6,FW,True,False
+Uğurcan Çakır,Galatasayar,GK,0.0,0.0,0.0,GK,False,False
+Gabriel Sara,Galatasayar,MF,0.1,0.1,0.5,MF,True,True
+Mario Lemina,Galatasayar,MF,0.0,0.0,0.3,MF,True,True
+Yunus Akgün,Galatasayar,FW,0.6,0.6,0.5,FW,True,False
+Eren Elmalı,Galatasayar,"DF,MF",0.1,0.1,0.0,DF,False,True
+Victor Osimhen,Galatasayar,FW,6.0,,0.2,FW,True,False
+Ismail Jakobs,Galatasayar,DF,0.0,0.0,0.2,DF,False,True
+Mauro Icardi,Galatasayar,FW,0.4,0.4,0.0,FW,True,False
+Wilfried Singo,Galatasayar,DF,0.0,0.0,0.1,DF,False,True
+İlkay Gündoğan,Galatasayar,MF,0.3,0.3,0.4,MF,True,True
+Günay Güvenç,Galatasayar,GK,,,,GK,False,False
+Kaan Ayhan,Galatasayar,"MF,FW",0.0,0.0,0.0,MF,True,True
+Kazımcan Karataş,Galatasayar,DF,,,,DF,False,True
+Ahmed Kutucu,Galatasayar,"FW,MF",0.0,0.0,0.0,FW,True,False
+Berkan Kutlu,Galatasayar,MF,0.0,0.0,0.0,MF,True,True
+Nicolò Zaniolo,Galatasayar,"FW,MF",,,,FW,True,False
+Arda Ünyay,Galatasayar,DF,,,,DF,False,True
+Yusuf Demir,Galatasayar,MF,,,,MF,True,True
+Metehan Baltacı,Galatasayar,DF,,,,DF,False,True
+Ahmet Şen,Galatasayar,GK,,,,GK,False,False
+Jankat Yilmaz,Galatasayar,GK,,,,GK,False,False
+Elias Jelert,Galatasayar,DF,,,,DF,False,True
+Gökdeniz Gürpüz,Galatasayar,MF,,,,MF,True,True
+Furkan Koçak,Galatasayar,MF,,,,MF,True,True
+Çağrı Balta,Galatasayar,FW,,,,FW,True,False
+Kacper Kozłowski,Gaziantep,MF,0.26,0.09,0.35,MF,True,True
+Alexandru Maxim,Gaziantep,"MF,FW",0.18,0.45,0.63,MF,True,True
+Kévin Rodrigues,Gaziantep,"DF,MF",0.18,0.09,0.28,DF,False,True
+Myenty Abena,Gaziantep,DF,0.11,0.0,0.11,DF,False,True
+Mustafa Burak Bozan,Gaziantep,GK,0.0,0.11,0.11,GK,False,False
+Melih Kabasakal,Gaziantep,"MF,DF",0.12,0.12,0.24,MF,True,True
+Arda Kızıldağ,Gaziantep,"DF,MF",0.13,0.0,0.13,DF,False,True
+Christopher Lungoyi,Gaziantep,"MF,FW",0.27,0.27,0.53,MF,True,True
+Luis Pérez,Gaziantep,"MF,DF",0.0,0.0,0.0,MF,True,True
+Deian Sorescu,Gaziantep,"MF,DF",0.14,0.0,0.14,MF,True,True
+Mohamed Lamine Bayo,Gaziantep,"FW,MF",0.34,0.0,0.34,FW,True,False
+Drissa Camara,Gaziantep,MF,0.18,0.36,0.53,MF,True,True
+Tayyib Talha Sanuç,Gaziantep,"DF,MF",0.0,0.0,0.0,DF,False,True
+Semih Güler,Gaziantep,DF,0.0,0.0,0.0,DF,False,True
+Badou Ndiaye,Gaziantep,MF,0.0,0.26,0.26,MF,True,True
+Emmanuel Boateng,Gaziantep,FW,0.0,0.0,0.0,FW,True,False
+Ogün Özçiçek,Gaziantep,MF,0.0,0.0,0.0,MF,True,True
+Zafer Görgen,Gaziantep,GK,0.0,0.0,0.0,GK,False,False
+Yusuf Kabadayı,Gaziantep,"MF,FW",0.43,0.0,0.43,MF,True,True
+Juninho Bacuna,Gaziantep,MF,0.0,0.0,0.0,MF,True,True
+Enver Kulasin,Gaziantep,MF,0.0,0.0,0.0,MF,True,True
+Nazim Sangaré,Gaziantep,DF,0.0,0.0,0.0,DF,False,True
+Salem M'bakata,Gaziantep,DF,0.0,0.0,0.0,DF,False,True
+Ali Kalın,Gaziantep,FW,0.0,0.0,0.0,FW,True,False
+Mirza Cihan,Gaziantep,FW,0.0,0.0,0.0,FW,True,False
+Sokratis Dioudis,Gaziantep,GK,0.0,0.0,0.0,GK,False,False
+Rob Nizet,Gaziantep,DF,0.0,0.0,0.0,DF,False,True
+İbrahim Alkış,Gaziantep,GK,,,,GK,False,False
+Onur Başyiğit,Gaziantep,DF,,,,DF,False,True
+Kuzey Bulgulu,Gaziantep,NAN,,,,NAN,False,False
+Muhammet Güneş,Gaziantep,MF,,,,MF,True,True
+Berke Özçelik,Gaziantep,MF,,,,MF,True,True
+Opponent Total,Gaziantep,NAN,,0.92,,NAN,False,False
+
+Dimitris Goutas,genclerbirligi,DF,0.08,0.0,0.08,DF,False,True
+Pedro Pereira,genclerbirligi,DF,0.0,0.0,0.0,DF,False,True
+Göktan Gürpüz,genclerbirligi,"MF,FW",0.0,0.21,0.21,MF,True,True
+Thalisson Kelven,genclerbirligi,DF,0.1,0.0,0.1,DF,False,True
+Žan Žužek,genclerbirligi,"DF,MF",0.21,0.0,0.21,DF,False,True
+Matěj Hanousek,genclerbirligi,DF,0.0,0.0,0.0,DF,False,True
+M'Baye Niang,genclerbirligi,FW,0.25,0.25,0.5,FW,True,False
+Oğulcan Ülgün,genclerbirligi,MF,0.26,0.0,0.26,MF,True,True
+Erhan Erentürk,genclerbirligi,GK,0.0,0.0,0.0,GK,False,False
+Franco Tongya,genclerbirligi,"MF,FW",0.32,0.0,0.32,MF,True,True
+Tom Dele-Bashiru,genclerbirligi,MF,0.0,0.16,0.16,MF,True,True
+Sekou Koita,genclerbirligi,"MF,FW",0.0,0.0,0.0,MF,True,True
+Metehan Mimaroğlu,genclerbirligi,"MF,FW",0.2,0.0,0.2,MF,True,True
+Abdurrahim Dursun,genclerbirligi,"MF,DF",0.0,0.0,0.0,MF,True,True
+Gökhan Akkan,genclerbirligi,GK,0.0,0.0,0.0,GK,False,False
+Michał Nalepa,genclerbirligi,"MF,FW",0.0,0.0,0.0,MF,True,True
+Adama Traoré,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Moussa Kyabou,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Dal Varesanovic,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Samed Onur,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Henry Onyekuru,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Ricardo Velho,genclerbirligi,GK,0.0,0.0,0.0,GK,False,False
+Daniel Popa,genclerbirligi,FW,0.0,0.0,0.0,FW,True,False
+Fıratcan Üzüm,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Oghenekaro Etebo,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Sinan Osmanoğlu,genclerbirligi,DF,0.0,0.0,0.0,DF,False,True
+Kevin Csoboth,genclerbirligi,FW,0.0,0.0,0.0,FW,True,False
+Dilhan Demir,genclerbirligi,MF,0.0,0.0,0.0,MF,True,True
+Furkan Ayaz,genclerbirligi,NAN,0.0,0.0,0.0,NAN,False,False
+Mehmet Akbal,genclerbirligi,MF,,,,MF,True,True
+Yiğit Aydar,genclerbirligi,DF,,,,DF,False,True
+Ebrar Aydın,genclerbirligi,GK,,,,GK,False,False
+Mikail Okyar,genclerbirligi,MF,,,,MF,True,True
+Yusuf Temel,genclerbirligi,FW,,,,FW,True,False
+Opponent Total,genclerbirligi,NAN,,0.92,,NAN,False,False
+Héliton,Göztepe,DF,0.0,0.08,0.08,DF,False,True
+Mateusz Lis,Göztepe,GK,0.0,0.0,0.0,GK,False,False
+Amine Cherni,Göztepe,MF,0.0,0.17,0.17,MF,True,True
+Arda Kurtulan,Göztepe,MF,0.0,0.09,0.09,MF,True,True
+Janderson,Göztepe,FW,0.09,0.28,0.37,FW,True,False
+Malcom Bokélé,Göztepe,DF,0.1,0.0,0.1,DF,False,True
+Rhaldney,Göztepe,MF,0.1,0.1,0.2,MF,True,True
+Juan Santos,Göztepe,FW,0.52,0.0,0.52,FW,True,False
+Anthony Dennis,Göztepe,MF,0.21,0.0,0.21,MF,True,True
+Junior Olaitan,Göztepe,MF,0.17,0.0,0.17,MF,True,True
+Novatus Dismas,Göztepe,"MF,DF",0.0,0.15,0.15,MF,True,True
+Efkan Bekiroğlu,Göztepe,MF,0.45,0.22,0.67,MF,True,True
+Allan Godói,Göztepe,DF,0.0,0.21,0.21,DF,False,True
+Taha Altıkardeş,Göztepe,DF,0.0,0.0,0.0,DF,False,True
+Furkan Bayır,Göztepe,DF,0.0,0.0,0.0,DF,False,True
+Emersonn,Göztepe,FW,0.72,0.0,0.72,FW,True,False
+Ibrahim Sabra,Göztepe,FW,,0.0,,FW,True,False
+İsmail Köybaşı,Göztepe,DF,0.0,0.0,0.0,DF,False,True
+Ahmed Ildiz,Göztepe,MF,0.0,0.0,0.0,MF,True,True
+Ruan,Göztepe,"DF,MF",0.0,0.0,0.0,DF,False,True
+Salem Bouajila,Göztepe,FW,0.0,0.0,0.0,FW,True,False
+Uğur Kaan Yıldız,Göztepe,DF,0.0,0.0,0.0,DF,False,True
+Ogün Bayrak,Göztepe,MF,,,,MF,True,True
+Tibet Durakçay,Göztepe,FW,,,,FW,True,False
+Ekrem Kılıçarslan,Göztepe,GK,,,,GK,False,False
+Nevzat Üzel,Göztepe,GK,,,,GK,False,False
+Ege Yıldırım,Göztepe,DF,,,,DF,False,True
+Opponent Total,Göztepe,NAN,0.5,0.25,0.75,NAN,False,False
+Andreas Gianniotis,kasimpasa,GK,0.0,0.0,0.0,GK,False,False
+Nicholas Opoku,kasimpasa,DF,0.0,0.0,0.0,DF,False,True
+Andri Fannar Baldursson,kasimpasa,MF,0.0,0.0,0.0,MF,True,True
+Attila Szalai,kasimpasa,DF,0.0,0.09,0.09,DF,False,True
+Cláudio Winck,kasimpasa,DF,0.29,0.0,0.29,DF,False,True
+Godfried Frimpong,kasimpasa,"DF,MF",0.0,0.11,0.11,DF,False,True
+Pape Habib Guèye,kasimpasa,FW,0.33,0.0,0.33,FW,True,False
+Mortadha Ben Ouanes,kasimpasa,"MF,DF",0.11,0.45,0.56,MF,True,True
+Mamadou Fall,kasimpasa,"MF,FW",0.0,0.0,0.0,MF,True,True
+Haris Hajradinović,kasimpasa,MF,0.33,0.0,0.33,MF,True,True
+Cafú,kasimpasa,MF,0.0,0.0,0.0,MF,True,True
+Cem Üstündag,kasimpasa,MF,0.0,0.0,0.0,MF,True,True
+Ali Yavuz Kol,kasimpasa,MF,0.0,0.0,0.0,MF,True,True
+Kubilay Kanatsızkuş,kasimpasa,FW,0.23,0.23,0.47,FW,True,False
+Fousseni Diabaté,kasimpasa,"MF,FW",0.0,0.0,0.0,MF,True,True
+Jhon Espinoza,kasimpasa,DF,0.0,0.0,0.0,DF,False,True
+Adam Arous,kasimpasa,DF,0.0,0.0,0.0,DF,False,True
+Yusuf Barasi,kasimpasa,MF,0.0,0.0,0.0,MF,True,True
+Atakan Müjde,kasimpasa,MF,0.0,,,MF,True,True
+Emre Taşdemir,kasimpasa,DF,0.0,0.0,0.0,DF,False,True
+Berk Yıldızlı,kasimpasa,FW,0.0,0.0,0.0,FW,True,False
+Adnan Aktas,kasimpasa,DF,,,,DF,False,True
+Ege Albayrak,kasimpasa,GK,,,,GK,False,False
+Taylan Aydın,kasimpasa,DF,,,,DF,False,True
+Ali Emre Yanar,kasimpasa,GK,,,,GK,False,False
+Yasin Eratilla,kasimpasa,FW,,,,FW,True,False
+Berkay Muratoğlu,kasimpasa,DF,,,,DF,False,True
+Loret Sadiku,kasimpasa,"DF,MF",,,,DF,False,True
+Emirhan Yigit,kasimpasa,MF,,,,MF,True,True
+Oğuzhan Yılmaz,kasimpasa,MF,,,,MF,True,True
+Opponent Total,kasimpasa,NAN,,,,NAN,False,False
+Lionel Carole,kayserispor,DF,0.0,0.0,0.0,DF,False,True
+Miguel Filipe Nunes Cardoso,kayserispor,"MF,FW",0.2,0.1,0.3,MF,True,True
+Stefano Denswil,kayserispor,DF,0.1,0.0,0.1,DF,False,True
+Ramazan Civelek,kayserispor,"DF,MF",0.0,0.11,0.11,DF,False,True
+Bilal Bayazit,kayserispor,GK,0.0,0.0,0.0,GK,False,False
+László Bénes,kayserispor,MF,0.25,0.12,0.37,MF,True,True
+Aaron Opoku,kayserispor,"MF,FW",0.0,0.15,0.15,MF,True,True
+Dorukhan Toköz,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+João Mendes,kayserispor,MF,0.0,0.48,0.48,MF,True,True
+German Onugkha,kayserispor,FW,0.48,0.0,0.48,FW,True,False
+Furkan Soyalp,kayserispor,MF,0.2,0.0,0.2,MF,True,True
+Abdulsamet Burak,kayserispor,DF,0.0,0.0,0.0,DF,False,True
+Carlos Mané,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+Gideon Jung,kayserispor,"MF,DF",0.0,0.0,0.0,MF,True,True
+Indrit Tuci,kayserispor,FW,0.5,0.0,0.5,FW,True,False
+Gökhan Sazdağı,kayserispor,DF,0.0,0.0,0.0,DF,False,True
+Arif Kocaman,kayserispor,DF,0.0,0.0,0.0,DF,False,True
+Yaw Ackah,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+Majid Hosseini,kayserispor,DF,0.0,0.0,0.0,DF,False,True
+Onurcan Piri,kayserispor,GK,0.0,0.0,0.0,GK,False,False
+Youssef Aït Bennasser,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+Nurettin Korkmaz,kayserispor,DF,0.0,0.64,0.64,DF,False,True
+Kayra Cihan,kayserispor,DF,0.0,0.0,0.0,DF,False,True
+Burak Kapacak,kayserispor,DF,0.0,0.42,0.42,DF,False,True
+Mehmet Eray Özbek,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+Ali Karimi,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+Talha Sarıarslan,kayserispor,FW,0.0,,,FW,True,False
+Yiğit Çeltik,kayserispor,MF,0.0,0.0,0.0,MF,True,True
+Deniz Donmezer,kayserispor,GK,,,,GK,False,False
+Baran Gezek,kayserispor,MF,,,,MF,True,True
+Arda Kaya,kayserispor,MF,,,,MF,True,True
+Mustafa Obut,kayserispor,DF,,,,DF,False,True
+Mehmet Öztürk,kayserispor,GK,,,,GK,False,False
+Opponent Total,kayserispor,NAN,,,,NAN,False,False
+Aleksandar Jovanović,kocaelispor,GK,0.0,0.0,0.0,GK,False,False
+Anfernee Dijksteel,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Tayfur Bingöl,kocaelispor,"MF,DF",0.48,0.0,0.48,MF,True,True
+Show,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Bruno Petković,kocaelispor,FW,0.5,0.0,0.5,FW,True,False
+Botond Balogh,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Joseph Nonge,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Hrvoje Smolčić,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Habib Keita,kocaelispor,MF,0.19,0.38,0.57,MF,True,True
+Ahmet Oğuz,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Massadio Haïdara,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Karol Linetty,kocaelispor,MF,0.0,0.22,0.22,MF,True,True
+Can Keles,kocaelispor,"FW,MF",0.0,0.23,0.23,FW,True,False
+Oleksandr Syrota,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Aaron Appindangoyé,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Ryan Mendes,kocaelispor,FW,0.0,0.0,0.0,FW,True,False
+Dan Agyei,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Muharrem Cinan,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Serdar Dursun,kocaelispor,FW,0.31,0.0,0.31,FW,True,False
+Rigoberto Rivas,kocaelispor,MF,0.0,0.4,0.4,MF,True,True
+Darko Churlinov,kocaelispor,"MF,FW",0.0,0.0,0.0,MF,True,True
+Samet Yalçın,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Oğulcan Çağlayan,kocaelispor,FW,0.0,0.0,0.0,FW,True,False
+Tarkan Serbest,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Mateusz Wieteska,kocaelispor,DF,0.0,0.0,0.0,DF,False,True
+Mesut Can Tunalı,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Furkan Gedik,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Cihat Çelik,kocaelispor,MF,0.0,0.0,0.0,MF,True,True
+Gökhan Değirmenci,kocaelispor,GK,,,,GK,False,False
+Ege Bilim,kocaelispor,NAN,,,,NAN,False,False
+Bünyamin Dalkılıç,kocaelispor,FW,,,,FW,True,False
+Onur Öztonga,kocaelispor,DF,,,,DF,False,True
+Ahmet Sagat,kocaelispor,FW,,,,FW,True,False
+Umut Nayir,Konyaspor,FW,0.55,0.09,0.64,FW,True,False
+Guilherme Sityá,Konyaspor,"DF,MF",0.0,0.09,0.09,DF,False,True
+Yhoan Andzouana,Konyaspor,"DF,MF",0.09,0.28,0.37,DF,False,True
+Melih Ibrahimoglu,Konyaspor,MF,0.0,0.11,0.11,MF,True,True
+Adil Demirbağ,Konyaspor,DF,0.1,0.2,0.3,DF,False,True
+Alassane Ndao,Konyaspor,"MF,FW",0.25,0.37,0.62,MF,True,True
+Enis Bardhi,Konyaspor,MF,0.35,0.0,0.35,MF,True,True
+Deniz Ertaş,Konyaspor,GK,0.0,0.12,0.12,GK,False,False
+Jackson Muleka,Konyaspor,"MF,FW",0.14,0.14,0.28,MF,True,True
+Riechedly Bazoer,Konyaspor,DF,0.0,0.0,0.0,DF,False,True
+Marko Jevtović,Konyaspor,"DF,MF",0.0,0.0,0.0,DF,False,True
+Uğurcan Yazgılı,Konyaspor,DF,0.0,0.0,0.0,DF,False,True
+Pedrinho,Konyaspor,MF,0.24,0.0,0.24,MF,True,True
+Jo Jinho,Konyaspor,MF,0.0,0.0,0.0,MF,True,True
+Bahadır Güngördü,Konyaspor,GK,0.0,0.0,0.0,GK,False,False
+Danijel Aleksić,Konyaspor,MF,0.46,0.0,0.46,MF,True,True
+Morten Bjørlo,Konyaspor,MF,0.0,0.0,0.0,MF,True,True
+Muhammet Tunahan Taşçı,Konyaspor,MF,0.67,0.67,,MF,True,True
+Josip Čalušić,Konyaspor,DF,0.0,0.0,0.0,DF,False,True
+Marius Ştefănescu,Konyaspor,"DF,FW",0.0,0.0,0.0,DF,False,True
+Melih Bostan,Konyaspor,FW,0.0,0.0,0.0,FW,True,False
+Kaan Akyazi,Konyaspor,FW,0.0,0.0,0.0,FW,True,False
+Ufuk Akyol,Konyaspor,MF,0.0,0.0,0.0,MF,True,True
+Mücahit Ibrahimoglu,Konyaspor,MF,0.0,0.0,0.0,MF,True,True
+Karahan Yasir Subaşı,Konyaspor,DF,0.0,0.0,0.0,DF,False,True
+Egemen Aydın,Konyaspor,GK,,,,GK,False,False
+İsmail Buğa,Konyaspor,MF,,,,MF,True,True
+Muzaffer Eriş,Konyaspor,DF,,,,DF,False,True
+Opponent Total,Konyaspor,NAN,,,,NAN,False,False
+Casper Højer Nielsen,Rizespor,DF,0.0,0.0,0.0,DF,False,True
+Giannis Papanikolaou,Rizespor,MF,0.09,0.0,0.09,MF,True,True
+Qazim Laçi,Rizespor,MF,0.0,0.19,0.19,MF,True,True
+Muhammet Taha Şahin,Rizespor,DF,0.0,0.0,0.0,DF,False,True
+Samet Akaydın,Rizespor,DF,0.0,0.09,0.09,DF,False,True
+Attila Mocsi,Rizespor,DF,0.11,0.0,0.11,DF,False,True
+Ali Sowe,Rizespor,FW,0.12,0.36,0.48,FW,True,False
+Yahia Fofana,Rizespor,GK,0.0,0.0,0.0,GK,False,False
+Muhamed Buljubasic,Rizespor,MF,0.0,0.0,0.0,MF,True,True
+Jesurun Rak Sakyi,Rizespor,"MF,FW",0.84,0.0,0.84,MF,True,True
+Erdem Canpolat,Rizespor,GK,0.0,0.0,0.0,GK,False,False
+Mithat Pala,Rizespor,"MF,DF",0.0,0.0,0.0,MF,True,True
+Ibrahim Olawoyin,Rizespor,MF,0.22,0.0,0.22,MF,True,True
+Emrecan Bulut,Rizespor,"MF,FW",0.22,0.44,0.67,MF,True,True
+Václav Jurečka,Rizespor,FW,0.23,0.0,0.23,FW,True,False
+Loide Augusto,Rizespor,"MF,FW",0.0,0.33,0.33,MF,True,True
+Halil Dervişoğlu,Rizespor,FW,0.0,0.0,0.0,FW,True,False
+Altin Zeqiri,Rizespor,"MF,FW",0.3,0.0,0.3,MF,True,True
+Xusniddin Aliqulov,Rizespor,DF,0.0,0.0,0.0,DF,False,True
+Modibo Sagnan,Rizespor,DF,0.0,0.0,0.0,DF,False,True
+Valentin Mihaila,Rizespor,MF,0.6,0.0,0.6,MF,True,True
+Taylan Antalyalı,Rizespor,MF,0.0,0.0,0.0,MF,True,True
+Dal Varesanovic,Rizespor,MF,,0.0,,MF,True,True
+Seyfettin Anıl Yaşar,Rizespor,DF,,,,DF,False,True
+Yakup Ayan,Rizespor,NAN,,,,NAN,False,False
+Bayram Çapoğlu,Rizespor,MF,,,,MF,True,True
+Emir Çoban,Rizespor,DF,,,,DF,False,True
+Efe Doğan,Rizespor,GK,,,,GK,False,False
+Furkan Orak,Rizespor,DF,,,,DF,False,True
+Osman Topçu,Rizespor,GK,,,,GK,False,False
+Deniz Yaşar,Rizespor,FW,,,,FW,True,False
+Opponent Total,Rizespor,NAN,,,,NAN,False,False
+Rick van Drongelen,Samsunspor,DF,0.18,0.0,0.18,DF,False,True
+Okan Kocuk,Samsunspor,GK,0.0,0.0,0.0,GK,False,False
+Ľubomír Šatka,Samsunspor,DF,0.0,0.1,0.1,DF,False,True
+Logi Tómasson,Samsunspor,DF,0.0,0.2,0.2,DF,False,True
+Carlo Holse,Samsunspor,MF,0.53,0.11,0.63,MF,True,True
+Zeki Yavru,Samsunspor,DF,0.0,0.0,0.0,DF,False,True
+Anthony Musaba,Samsunspor,MF,0.23,0.23,0.47,MF,True,True
+Olivier Ntcham,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Marius Mouandilmadji,Samsunspor,FW,0.25,0.0,0.25,FW,True,False
+Antoine Makoumbou,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Celil Yüksel,Samsunspor,MF,0.0,0.19,0.19,MF,True,True
+Emre Kılınç,Samsunspor,"MF,FW",0.0,0.23,0.23,MF,True,True
+Tanguy Coulibaly,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Cherif Ndiaye,Samsunspor,FW,,0.0,,FW,True,False
+Yunus Emre Çift,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Landry Dimata,Samsunspor,"MF,FW",0.0,0.0,0.0,MF,True,True
+Joe Mendes,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Toni Borevkovic,Samsunspor,DF,0.0,0.0,0.0,DF,False,True
+Afonso Sousa,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Soner Gönül,Samsunspor,DF,0.0,0.0,0.0,DF,False,True
+Soner Aydoğdu,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Arbnor Muja,Samsunspor,"FW,MF",0.0,0.0,0.0,FW,True,False
+Polat Yaldır,Samsunspor,FW,0.0,0.0,0.0,FW,True,False
+Ebrima Ceesay,Samsunspor,FW,0.0,0.0,0.0,FW,True,False
+Tahsin Bülbül,Samsunspor,MF,0.0,0.0,0.0,MF,True,True
+Eyüp Aydın,Samsunspor,MF,,,,MF,True,True
+Bedirhan Çetin,Samsunspor,DF,,,,DF,False,True
+Albert Posiadala,Samsunspor,GK,,,,GK,False,False
+Efe Töruz,Samsunspor,GK,,,,GK,False,False
+Efe Üstün,Samsunspor,GK,,,,GK,False,False
+Opponent Total,Samsunspor,NAN,0.91,0.73,,NAN,False,False
+Tim Jabol-Folcarelli,Trabzonspor,MF,0.0,0.26,0.26,MF,True,True
+Paul Onuachu,Trabzonspor,FW,0.7,0.09,0.79,FW,True,False
+Stefan Savić,Trabzonspor,DF,0.09,0.09,0.19,DF,False,True
+Arsenii Batahov,Trabzonspor,DF,0.0,0.0,0.0,DF,False,True
+Mustafa Eskihellaç,Trabzonspor,DF,0.0,0.1,0.1,DF,False,True
+Wagner Pina,Trabzonspor,DF,0.0,0.19,0.19,DF,False,True
+Oleksandr Zubkov,Trabzonspor,MF,0.11,0.11,0.22,MF,True,True
+Felipe Augusto,Trabzonspor,"MF,FW",0.6,0.0,0.6,MF,True,True
+Kazeem Olaigbe,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+André Onana,Trabzonspor,GK,0.0,0.12,0.12,GK,False,False
+Okay Yokuşlu,Trabzonspor,"MF,DF",0.15,0.0,0.15,MF,True,True
+Christ Inao Oulaï,Trabzonspor,MF,0.18,0.37,0.55,MF,True,True
+Uğurcan Çakır,Trabzonspor,GK,0.0,0.0,0.0,GK,False,False
+Ernest Muçi,Trabzonspor,"MF,FW",0.0,0.0,0.0,MF,True,True
+Ozan Tufan,Trabzonspor,"MF,DF",0.0,0.0,0.0,MF,True,True
+Arif Boşluk,Trabzonspor,DF,0.0,0.0,0.0,DF,False,True
+Rayyan Baniya,Trabzonspor,DF,0.0,0.0,0.0,DF,False,True
+Edin Višća,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Anthony Nwakaeme,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Danylo Sikan,Trabzonspor,FW,0.76,0.0,0.76,FW,True,False
+Benjamin Bouchouari,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Batista Mendy,Trabzonspor,"DF,MF",0.0,0.0,0.0,DF,False,True
+Salih Malkoçoglu,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Cihan Çanak,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Muhammed Cham,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Boran Başkan,Trabzonspor,MF,0.0,0.0,0.0,MF,True,True
+Onuralp Çevikkan,Trabzonspor,GK,,,,GK,False,False
+Ahmet Doğan Yıldırım,Trabzonspor,GK,,,,GK,False,False
+Taha Emre İnce,Trabzonspor,DF,,,,DF,False,True
+Serdar Saatçı,Trabzonspor,DF,,,,DF,False,True
