@@ -3,291 +3,352 @@ import pandas as pd
 import numpy as np
 from tensorflow import keras
 import plotly.graph_objects as go
+import os
 
-# ---------- SAYFA ----------
-st.set_page_config(page_title="Futbol AI Scout", page_icon="⚽", layout="wide")
+# ---------- SAYFA AYARLARI ----------
+st.set_page_config(page_title="Futbol AI Scout Pro", page_icon="⚽", layout="wide")
 
 st.markdown(
     """
     <style>
     .stButton>button {
         width: 100%;
-        background-color: #FF4B4B;
+        background-color: #00CC66;
         color: white;
         font-weight: bold;
+        border-radius: 8px;
+    }
+    .metric-card {
+        background-color: #f0f2f6;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-st.title("⚽ Yapay Zeka Destekli Futbol Analiz Sistemi")
-st.markdown("**2025-2026 Süper Lig: Hücum vs Savunma Analizi + Top-5 Benchmark/Scout**")
+st.title("⚽ Futbol AI Scout & Matchup Analisti")
+st.markdown("**Gelişmiş Yapay Zeka Destekli Oyuncu Karşılaştırma ve Scouting Sistemi**")
 
-# ---------- PATHS ----------
+# ---------- DOSYA YOLLARI (PATHS) ----------
+# Bu yolların senin proje klasörünle birebir aynı olduğundan emin ol
 SUPERLIG_FILE = "data/processed/superlig_scored_benchmark.csv"
 TOP5_FILE     = "data/processed/top5_players_scored.csv"
 BENCH_FILE    = "data/processed/top5_benchmarks_percentiles.csv"
 
+# Model dosya isimlerini düzelttik
 MODEL_FILE = "models/futbol_ann_ga.h5"
-SCALER_MIN_FILE = "models/combined_minmax_min.npy"
-SCALER_MAX_FILE = "models/combined_minmax_max.npy"
-SCALER_FEATS_FILE = "models/combined_minmax_features.txt"
+SCALER_MEAN_FILE = "models/scaler_mean.npy"
+SCALER_SCALE_FILE = "models/scaler_scale.npy"
+SCALER_FEATS_FILE = "models/feature_names.txt"
 
-# ---------- LOAD ----------
+# ---------- YÜKLEME FONKSİYONLARI ----------
 @st.cache_resource
 def load_everything():
+    # Veri setlerini yükle
+    if not os.path.exists(SUPERLIG_FILE):
+        st.error(f"Dosya bulunamadı: {SUPERLIG_FILE}. Lütfen veri işleme adımlarını tamamlayın.")
+        return None, None, None, None, None, None, None
+
     sl = pd.read_csv(SUPERLIG_FILE)
-    t5 = pd.read_csv(TOP5_FILE)
-    bench = pd.read_csv(BENCH_FILE)
+    
+    # Top5 dosyası yoksa boş bir DataFrame oluştur (Hata vermemesi için)
+    if os.path.exists(TOP5_FILE):
+        t5 = pd.read_csv(TOP5_FILE)
+    else:
+        t5 = pd.DataFrame() 
+
+    if os.path.exists(BENCH_FILE):
+        bench = pd.read_csv(BENCH_FILE)
+    else:
+        bench = pd.DataFrame()
+
+    # Modeli ve Scaler'ı yükle
+    if not os.path.exists(MODEL_FILE):
+        st.error("Model dosyası bulunamadı. Lütfen önce '05_train_ann.py' dosyasını çalıştırın.")
+        return None, None, None, None, None, None, None
 
     model = keras.models.load_model(MODEL_FILE, compile=False)
-
-    data_min = np.load(SCALER_MIN_FILE)
-    data_max = np.load(SCALER_MAX_FILE)
+    data_mean = np.load(SCALER_MEAN_FILE)
+    data_scale = np.load(SCALER_SCALE_FILE)
+    
     with open(SCALER_FEATS_FILE, "r", encoding="utf-8") as f:
         feats = [line.strip() for line in f.readlines()]
 
-    # eski UI uyumluluğu
-    if "Takim" not in sl.columns and "Team" in sl.columns:
-        sl["Takim"] = sl["Team"]
-    if "Takim" not in t5.columns and "Team" in t5.columns:
-        t5["Takim"] = t5["Team"]
+    # UI uyumluluğu (Eski koddan kalan temizlikler)
+    for df in [sl, t5]:
+        if not df.empty:
+            if "Takim" not in df.columns and "Team" in df.columns:
+                df["Takim"] = df["Team"]
+            if "Pos_Simple" not in df.columns and "Pos" in df.columns:
+                df["Pos_Simple"] = df["Pos"].astype(str).str.split(",").str[0]
+            if "Rol" not in df.columns:
+                df["Rol"] = df.get("FM_Rol_Base", "")
 
-    if "Pos_Simple" not in sl.columns:
-        sl["Pos_Simple"] = sl["Pos"].astype(str).str.split(",").str[0]
-    if "Pos_Simple" not in t5.columns:
-        t5["Pos_Simple"] = t5["Pos"].astype(str).str.split(",").str[0]
+    return sl, t5, bench, model, feats, data_mean, data_scale
 
-    if "Rol" not in sl.columns:
-        sl["Rol"] = sl.get("FM_Rol_Base", "")
+# Verileri Yükle
+loaded_data = load_everything()
+if loaded_data[0] is None:
+    st.stop() # Veri yoksa durdur
 
-    return sl, t5, bench, model, feats, data_min, data_max
+sl, t5, bench, model, feats, data_mean, data_scale = loaded_data
 
-sl, t5, bench, model, feats, data_min, data_max = load_everything()
+# ---------- YARDIMCI FONKSİYONLAR ----------
 
-def minmax_transform(X: np.ndarray) -> np.ndarray:
-    # X: (n, d)
-    denom = (data_max - data_min)
-    denom = np.where(denom == 0, 1.0, denom)
-    return (X - data_min) / denom
+def standard_transform(X: np.ndarray) -> np.ndarray:
+    # StandardScaler Formülü: (X - mean) / scale
+    # Veri eksikse (NaN) 0 kabul ediyoruz
+    X = np.nan_to_num(X, nan=0.0)
+    return (X - data_mean) / data_scale
 
 def cosine_sim(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    # a: (d,), b: (n,d)
+    # a: (d,) vektör (bizim oyuncu)
+    # b: (n,d) matris (diğer oyuncular)
     a = a.reshape(1, -1)
-    a_norm = a / (np.linalg.norm(a, axis=1, keepdims=True) + 1e-9)
-    b_norm = b / (np.linalg.norm(b, axis=1, keepdims=True) + 1e-9)
-    return (a_norm @ b_norm.T).ravel()
+    # Norm hesapla (sıfıra bölme hatasını önlemek için +1e-9 ekle)
+    a_norm = np.linalg.norm(a, axis=1, keepdims=True) + 1e-9
+    b_norm = np.linalg.norm(b, axis=1, keepdims=True) + 1e-9
+    
+    # Cosine Similarity = (A . B) / (|A| * |B|)
+    dot_product = a @ b.T
+    similarity = dot_product / (a_norm @ b_norm.T)
+    return similarity.ravel()
 
-def radar_scores(p1: pd.Series, p2: pd.Series, title1: str, title2: str):
+def create_radar_chart(p1, p2, label1, label2, comparison_type="Genel"):
     categories = ["Defans", "Oyun Kurucu", "Hücum", "Overall"]
-    v1 = [p1["Defans_Skoru"], p1["OyunKurucu_Skoru"], p1["Hucum_Skoru"], p1["Overall_Skoru"]]
-    v2 = [p2["Defans_Skoru"], p2["OyunKurucu_Skoru"], p2["Hucum_Skoru"], p2["Overall_Skoru"]]
+    
+    # Verileri 0-1 arasına normalize etmek yerine direkt skorları kullanıyoruz (Zaten 0-10 aralığında scale edilmişti önceki adımlarda)
+    # Görselleştirmek için 10 üzerinden normalizasyon varsayıyoruz.
+    
+    v1 = [p1.get("Defans_Skoru",0), p1.get("OyunKurucu_Skoru",0), p1.get("Hucum_Skoru",0), p1.get("Overall_Skoru",0)]
+    v2 = [p2.get("Defans_Skoru",0), p2.get("OyunKurucu_Skoru",0), p2.get("Hucum_Skoru",0), p2.get("Overall_Skoru",0)]
 
+    # Radar kapanması için başa dön
     v1 += v1[:1]
     v2 += v2[:1]
     cats = categories + categories[:1]
 
     fig = go.Figure()
-    fig.add_trace(go.Scatterpolar(r=v1, theta=cats, fill="toself", name=title1))
-    fig.add_trace(go.Scatterpolar(r=v2, theta=cats, fill="toself", name=title2))
+    fig.add_trace(go.Scatterpolar(r=v1, theta=cats, fill="toself", name=label1, line_color='blue'))
+    fig.add_trace(go.Scatterpolar(r=v2, theta=cats, fill="toself", name=label2, line_color='red'))
+    
     fig.update_layout(
-        polar=dict(radialaxis=dict(visible=True, range=[0, 1])),
+        polar=dict(radialaxis=dict(visible=True, range=[0, 10])), # Skorlar genelde 0-10 arası
         showlegend=True,
-        height=360,
-        margin=dict(l=10, r=10, t=30, b=10),
+        title=f"{comparison_type} Karşılaştırması"
     )
     return fig
 
-# ---------- TABS ----------
-tab1, tab2 = st.tabs(["1) Matchup Analizi", "2) Top-5 Benchmark & Similarity Scout"])
+# ---------- SEKMELER ----------
+tab1, tab2 = st.tabs(["⚔️ Matchup & Kıyaslama", "🌍 Scouting & Benzer Oyuncular"])
 
 # ==========================
-# TAB 1: MATCHUP
+# TAB 1: MATCHUP VE KIYASLAMA
 # ==========================
 with tab1:
-    st.sidebar.header("🕵️‍♂️ Oyuncu Seçimi (Matchup)")
-
+    st.sidebar.header("Oyuncu Seçimi")
+    
+    # KULLANICI İSTEĞİ: Mod Seçimi
     mode = st.sidebar.radio(
-        "🎛️ Karşılaştırma Modu",
-        ["Serbest Matchup (Hücum vs Rakip)", "Aynı Mevki Kıyas (MevkiGroup)"],
-        index=0,
-        key="mode_tab1"
+        "Analiz Modu Seçin:",
+        ["Aynı Mevki Kıyaslama (Örn: Stoper vs Stoper)", "Matchup Analizi (Hücumcu vs Savunmacı)"]
     )
-
+    
     takimlar = sorted(sl["Takim"].astype(str).unique())
+    
+    # --- OYUNCU SEÇİM KUTULARI ---
+    st.sidebar.subheader("1. Oyuncu (Bizim Takım)")
+    t1 = st.sidebar.selectbox("Takım 1", takimlar, index=0, key="t1")
+    p1_list = sl[sl["Takim"] == t1]["Player"].tolist()
+    p1_name = st.sidebar.selectbox("Oyuncu 1", p1_list, key="p1")
+    
+    st.sidebar.subheader("2. Oyuncu (Rakip/Kıyas)")
+    # Varsayılan olarak farklı bir takım seçilsin
+    def_idx = 1 if len(takimlar) > 1 else 0
+    t2 = st.sidebar.selectbox("Takım 2", takimlar, index=def_idx, key="t2")
+    p2_list = sl[sl["Takim"] == t2]["Player"].tolist()
+    p2_name = st.sidebar.selectbox("Oyuncu 2", p2_list, key="p2")
 
-    if mode == "Serbest Matchup (Hücum vs Rakip)":
-        st.sidebar.subheader("1. Oyuncu (Hücum)")
-        t1 = st.sidebar.selectbox("Takım", takimlar, index=0, key="t1_free")
-        o1_list = sl[sl["Takim"] == t1]["Player"].tolist()
-        o1_name = st.sidebar.selectbox("Oyuncu", o1_list, key="o1_free")
+    # Seçilen oyuncuların verilerini al
+    player1 = sl[sl["Player"] == p1_name].iloc[0]
+    player2 = sl[sl["Player"] == p2_name].iloc[0]
 
-        st.sidebar.subheader("2. Oyuncu (Rakip)")
-        t2 = st.sidebar.selectbox("Takım ", takimlar, index=min(1, len(takimlar) - 1), key="t2_free")
-        o2_list = sl[sl["Takim"] == t2]["Player"].tolist()
-        if not o2_list:
-            o2_list = sl["Player"].tolist()
-        o2_name = st.sidebar.selectbox("Oyuncu ", o2_list, key="o2_free")
-
-        selected_mg = None
-    else:
-        st.sidebar.subheader("Aynı Mevki Kıyas Ayarları")
-
-        mg_list_pref = ["GK", "CB", "FB", "MID", "AM", "WING", "FWD"]
-        available_mg = [m for m in mg_list_pref if m in sl["MevkiGroup"].astype(str).unique()]
-        if not available_mg:
-            available_mg = sorted(sl["MevkiGroup"].astype(str).unique().tolist())
-
-        selected_mg = st.sidebar.selectbox("MevkiGroup", available_mg, key="mg_same")
-
-        sl_mg = sl[sl["MevkiGroup"].astype(str) == str(selected_mg)].copy()
-
-        st.sidebar.markdown("### 🔝 Top 10 (Overall)")
-        top10 = (
-            sl_mg.sort_values("Overall_Skoru", ascending=False)
-            .loc[:, ["Player", "Takim", "Overall_Skoru", "Hucum_Skoru", "Defans_Skoru"]]
-            .head(10)
-        )
-        st.sidebar.dataframe(top10, use_container_width=True, height=280)
-
-        st.sidebar.subheader("1. Oyuncu")
-        t1 = st.sidebar.selectbox("Takım", sorted(sl_mg["Takim"].astype(str).unique()), key="t1_same")
-        p1_list = sl_mg[sl_mg["Takim"] == t1]["Player"].tolist()
-        o1_name = st.sidebar.selectbox("Oyuncu", p1_list, key="o1_same")
-
-        st.sidebar.subheader("2. Oyuncu")
-        t2_candidates = sorted(sl_mg["Takim"].astype(str).unique())
-        default_idx = 0 if len(t2_candidates) == 1 else 1
-        t2 = st.sidebar.selectbox("Takım ", t2_candidates, index=min(default_idx, len(t2_candidates) - 1), key="t2_same")
-        p2_list = sl_mg[sl_mg["Takim"] == t2]["Player"].tolist()
-        o2_name = st.sidebar.selectbox("Oyuncu ", p2_list, key="o2_same")
-
-    p1 = sl[sl["Player"] == o1_name].iloc[0]
-    p2 = sl[sl["Player"] == o2_name].iloc[0]
-
-    label1 = "🔵 Hücum Oyuncusu" if mode.startswith("Serbest") else "🔵 Oyuncu 1"
-    label2 = "🔴 Rakip Oyuncu" if mode.startswith("Serbest") else "🔴 Oyuncu 2 (Aynı Mevki)"
-
-    c1, c2, c3 = st.columns([1, 0.2, 1])
-
-    with c1:
-        st.info(f"{label1}: {p1['Player']}")
-        st.caption(f"{p1['Takim']} | {p1['Pos_Simple']} | {p1.get('Rol','')}")
-        col_a, col_b = st.columns(2)
-        col_a.metric("Hücum Skoru", f"{p1['Hucum_Skoru']:.3f}")
-        col_b.metric("Overall Skor", f"{p1['Overall_Skoru']:.3f}")
-
-        col_c, col_d = st.columns(2)
-        col_c.metric("Top-5 Overall %", f"{p1.get('Top5Percentile_Overall_Skoru', np.nan):.1f}")
-        col_d.metric("G+A / 90", f"{p1['G+A_p90']:.2f}")
-
-    with c2:
-        st.markdown("<h2 style='text-align: center; margin-top: 20px;'>VS</h2>", unsafe_allow_html=True)
-
-    with c3:
-        st.error(f"{label2}: {p2['Player']}")
-        st.caption(f"{p2['Takim']} | {p2['Pos_Simple']} | {p2.get('Rol','')}")
-        col_a, col_b = st.columns(2)
-        col_a.metric("Defans Skoru", f"{p2['Defans_Skoru']:.3f}")
-        col_b.metric("Overall Skor", f"{p2['Overall_Skoru']:.3f}")
-
-        col_c, col_d = st.columns(2)
-        col_c.metric("Top-5 Overall %", f"{p2.get('Top5Percentile_Overall_Skoru', np.nan):.1f}")
-        col_d.metric("G+A / 90", f"{p2['G+A_p90']:.2f}")
-
-    if st.button("🔥 EŞLEŞMEYİ ANALİZ ET", key="btn_analyze_tab1"):
+    # --- ANALİZ BUTONU ---
+    if st.button("Analizi Başlat", type="primary"):
         st.divider()
+        
+        col1, col2, col3 = st.columns([1, 0.2, 1])
+        
+        # OYUNCU 1 KART
+        with col1:
+            st.subheader(f"🔵 {player1['Player']}")
+            st.caption(f"{player1['Takim']} | {player1['Pos_Simple']}")
+            st.metric("Overall Skor", f"{player1['Overall_Skoru']:.1f}")
+            st.metric("Hücum Skoru", f"{player1['Hucum_Skoru']:.1f}")
+            st.metric("Defans Skoru", f"{player1['Defans_Skoru']:.1f}")
+            
+        with col2:
+            st.markdown("<h1 style='text-align: center;'>VS</h1>", unsafe_allow_html=True)
+            
+        # OYUNCU 2 KART
+        with col3:
+            st.subheader(f"🔴 {player2['Player']}")
+            st.caption(f"{player2['Takim']} | {player2['Pos_Simple']}")
+            st.metric("Overall Skor", f"{player2['Overall_Skoru']:.1f}")
+            st.metric("Hücum Skoru", f"{player2['Hucum_Skoru']:.1f}")
+            st.metric("Defans Skoru", f"{player2['Defans_Skoru']:.1f}")
 
-        # ANN input: scaler/feature list ile hazırlanır
-        x1 = np.array([float(p1.get(f, 0.0)) for f in feats], dtype=float).reshape(1, -1)
-        x2 = np.array([float(p2.get(f, 0.0)) for f in feats], dtype=float).reshape(1, -1)
+        st.divider()
+        
+        # --- MANTIKSAL ANALİZ KISMI (KULLANICI İSTEĞİ) ---
+        
+        # 1. MODEL TAHMİNİ (G+A Potansiyeli - Data Leakage Olmadan)
+        # Veriyi hazırla
+        vec1 = np.array([float(player1.get(f, 0.0)) for f in feats]).reshape(1, -1)
+        vec2 = np.array([float(player2.get(f, 0.0)) for f in feats]).reshape(1, -1)
+        
+        # Scale et (StandardScaler ile)
+        vec1_scaled = standard_transform(vec1)
+        vec2_scaled = standard_transform(vec2)
+        
+        # Tahmin
+        pred1 = float(model.predict(vec1_scaled, verbose=0)[0, 0])
+        pred2 = float(model.predict(vec2_scaled, verbose=0)[0, 0])
 
-        # ANN modeli bu projede tek vektör -> G+A tahmini olarak eğitildi varsayımıyla
-        y1 = float(model.predict(x1, verbose=0)[0, 0])
-        y2 = float(model.predict(x2, verbose=0)[0, 0])
-
-        diff = y1 - y2
-        advantage = 50 + diff * 40
-        advantage = max(0.0, min(100.0, advantage))
-
-        st.subheader("🧠 Yapay Zeka Kararı")
-        st.progress(int(advantage))
-
-        col_res1, col_res2 = st.columns([3, 1])
-
-        with col_res1:
-            if advantage > 55:
-                st.success(f"🔥 **{p1['Player']} daha avantajlı görünüyor!** (%{advantage:.1f})")
-            elif advantage < 45:
-                st.error(f"🧱 **{p2['Player']} daha güçlü görünüyor!** (%{100-advantage:.1f})")
+        # 2. SENARYOYA GÖRE DEĞERLENDİRME
+        st.subheader("📝 Yapay Zeka Analiz Raporu")
+        
+        if mode == "Aynı Mevki Kıyaslama (Örn: Stoper vs Stoper)":
+            # AYNI MEVKİ: Direkt Overall veya mevkiye özgü puana bakılır
+            st.info("Bu modda oyuncuların kendi mevkilerindeki genel performansları kıyaslanıyor.")
+            
+            score1 = player1["Overall_Skoru"]
+            score2 = player2["Overall_Skoru"]
+            
+            diff = score1 - score2
+            if diff > 0.5:
+                st.success(f"**{player1['Player']}** daha komple bir oyuncu profili çiziyor.")
+            elif diff < -0.5:
+                st.error(f"**{player2['Player']}** bu mevkide daha üstün istatistiklere sahip.")
             else:
-                st.warning(f"⚖️ **Çok dengeli!** (%{advantage:.1f})")
-
-            st.markdown(
-                f"- {p1['Player']} tahmini G+A_p90: **{y1:.2f}** (gerçek: {p1['G+A_p90']:.2f})  \n"
-                f"- {p2['Player']} tahmini G+A_p90: **{y2:.2f}** (gerçek: {p2['G+A_p90']:.2f})"
-            )
-
-            if selected_mg is not None:
-                st.info(f"Bu kıyas **MevkiGroup = {selected_mg}** içinde yapılıyor.")
-
-        with col_res2:
-            fig = radar_scores(p1, p2, p1["Player"], p2["Player"])
+                st.warning("İki oyuncu da çok benzer seviyede.")
+                
+            # Radar Grafiği (Genel)
+            fig = create_radar_chart(player1, player2, player1['Player'], player2['Player'], "Mevki Performans")
             st.plotly_chart(fig, use_container_width=True)
 
+        else:
+            # MATCHUP: Hücum vs Defans
+            st.info("Bu modda Oyuncu 1'in Hücum gücü ile Oyuncu 2'nin Savunma gücü çarpıştırılıyor.")
+            
+            # Matchup Skoru Hesaplama
+            # P1 Hücum - P2 Defans
+            att_power = player1["Hucum_Skoru"]
+            def_power = player2["Defans_Skoru"]
+            
+            matchup_diff = att_power - def_power
+            
+            col_res1, col_res2 = st.columns(2)
+            
+            with col_res1:
+                st.write(f"🔵 {player1['Player']} Hücum Gücü: **{att_power:.1f}**")
+                st.write(f"🔴 {player2['Player']} Defans Gücü: **{def_power:.1f}**")
+                
+                if matchup_diff > 1.5:
+                    st.success(f"🔥 **{player1['Player']}** bu eşleşmede rakibine büyük üstünlük kurabilir!")
+                elif matchup_diff < -1.5:
+                    st.error(f"🧱 **{player2['Player']}** savunmada duvar örüyor, geçmek çok zor.")
+                else:
+                    st.warning("⚖️ **Dengeli bir eşleşme.** Günlük form belirleyici olur.")
+
+                st.markdown("---")
+                st.caption(f"Yapay Zeka Tahmini (Ofansif Katkı Potansiyeli):")
+                st.caption(f"{player1['Player']}: {pred1:.2f} G+A/90 Beklentisi")
+                
+            with col_res2:
+                 # Matchup Bar
+                 fig_bar = go.Figure()
+                 fig_bar.add_trace(go.Bar(
+                     x=[att_power, def_power],
+                     y=[f"{player1['Player']} (Hücum)", f"{player2['Player']} (Defans)"],
+                     orientation='h',
+                     marker_color=['blue', 'red']
+                 ))
+                 fig_bar.update_layout(title="Matchup Güç Dengesi", xaxis_range=[0, 10])
+                 st.plotly_chart(fig_bar, use_container_width=True)
+
 # ==========================
-# TAB 2: BENCHMARK + SIMILARITY
+# TAB 2: SCOUTING (BENZER OYUNCU)
 # ==========================
 with tab2:
-    st.subheader("📊 Top-5 Benchmark & Similarity Scout")
+    st.header("🌍 Global Scouting Ağı (Top 5 Lig)")
+    st.markdown("Süper Lig'deki bir oyuncunun Avrupa'nın 5 büyük ligindeki istatistiksel ikizlerini bulun.")
+    
+    # Süper Lig'den oyuncu seç (Tab 1'den bağımsız olabilir)
+    col_scout1, col_scout2 = st.columns([1, 2])
+    
+    with col_scout1:
+        team_scout = st.selectbox("Takım Seç", takimlar, key="scout_team")
+        p_scout_list = sl[sl["Takim"] == team_scout]["Player"].tolist()
+        player_scout_name = st.selectbox("Oyuncu Seç", p_scout_list, key="scout_player")
+        
+        target_player = sl[sl["Player"] == player_scout_name].iloc[0]
+        
+        st.markdown("### Seçilen Oyuncu")
+        st.write(f"**{target_player['Player']}**")
+        st.write(f"Mevki: {target_player['Pos_Simple']}")
+        st.metric("Süper Lig Overall", f"{target_player['Overall_Skoru']:.1f}")
 
-    left, right = st.columns([1.2, 1])
-
-    with left:
-        st.markdown("### Süper Lig oyuncusu seç")
-        team_pick = st.selectbox("Takım", sorted(sl["Takim"].astype(str).unique()), key="team_tab2")
-        p_list = sl[sl["Takim"] == team_pick]["Player"].tolist()
-        player_pick = st.selectbox("Oyuncu", p_list, key="player_tab2")
-        p = sl[sl["Player"] == player_pick].iloc[0]
-
-        st.markdown("### Top-5 percentile (aynı MevkiGroup)")
-        cols = st.columns(3)
-        cols[0].metric("Overall %", f"{p.get('Top5Percentile_Overall_Skoru', np.nan):.1f}")
-        cols[1].metric("Hücum %", f"{p.get('Top5Percentile_Hucum_Skoru', np.nan):.1f}")
-        cols[2].metric("Defans %", f"{p.get('Top5Percentile_Defans_Skoru', np.nan):.1f}")
-
-        cols2 = st.columns(2)
-        cols2[0].metric("Oyun Kurucu %", f"{p.get('Top5Percentile_OyunKurucu_Skoru', np.nan):.1f}")
-        cols2[1].metric("G+A_p90 %", f"{p.get('Top5Percentile_G+A_p90', np.nan):.1f}")
-
-        st.caption(f"MevkiGroup: {p['MevkiGroup']} | Pozisyon: {p.get('Pos_Simple','')} | Rol: {p.get('Rol','')}")
-
-    with right:
-        st.markdown("### 🔎 Avrupa benzerleri (Top-5)")
-        mg = str(p["MevkiGroup"])
-
-        # Similarity için ortak feature uzayı: feats listesi (combined_minmax_features)
-        # Not: Bu feats, MinMax fit edilirken kullanılan COMMON_METRICS'tir.
-        p_vec = np.array([float(p.get(f, 0.0)) for f in feats], dtype=float)
-
-        t5_sub = t5[t5["MevkiGroup"].astype(str) == mg].copy()
-        if t5_sub.empty:
-            st.warning("Bu MevkiGroup için Top-5 tarafında kayıt bulunamadı.")
+    with col_scout2:
+        if t5.empty:
+            st.warning("Top 5 lig verisi (top5_players_scored.csv) bulunamadı.")
         else:
-            mat = np.stack([np.array([float(row.get(f, 0.0)) for f in feats], dtype=float) for _, row in t5_sub.iterrows()])
-            sims = cosine_sim(p_vec, mat)
-            t5_sub["Similarity"] = sims
-
-            out = t5_sub.sort_values("Similarity", ascending=False).head(10)
-            st.dataframe(
-                out[["Player", "Team", "League", "Pos", "Overall_Skoru", "G+A_p90", "Similarity"]],
-                use_container_width=True,
-                height=380
-            )
-
-            # Radar: ilk benzer oyuncu ile
-            best = out.iloc[0]
-            st.markdown(f"#### Radar: {p['Player']} vs {best['Player']}")
-            fig2 = radar_scores(p, best, p["Player"], best["Player"])
-            st.plotly_chart(fig2, use_container_width=True)
+            if st.button("🔎 Benzer Oyuncuları Tara"):
+                with st.spinner("Avrupa veritabanı taranıyor..."):
+                    # 1. Seçilen oyuncunun feature vektörünü çıkar
+                    target_vec = np.array([float(target_player.get(f, 0.0)) for f in feats])
+                    
+                    # 2. Sadece AYNI MEVKİDEKİ oyuncularla kıyasla (Daha doğru sonuç için)
+                    target_pos_group = str(target_player["MevkiGroup"])
+                    t5_filtered = t5[t5["MevkiGroup"].astype(str) == target_pos_group].copy()
+                    
+                    if t5_filtered.empty:
+                        st.warning("Avrupa'da bu mevkide oyuncu bulunamadı, tüm veritabanı taranıyor.")
+                        t5_filtered = t5.copy()
+                    
+                    # 3. Avrupa'daki oyuncuların feature matrisini hazırla
+                    # (Burada yavaşlık olmaması için normalde önceden hesaplanmalı ama şimdilik anlık yapıyoruz)
+                    t5_matrix = []
+                    valid_indices = []
+                    
+                    for idx, row in t5_filtered.iterrows():
+                        vec = [float(row.get(f, 0.0)) for f in feats]
+                        t5_matrix.append(vec)
+                        valid_indices.append(idx)
+                        
+                    t5_matrix = np.array(t5_matrix)
+                    
+                    # 4. Cosine Similarity Hesapla
+                    scores = cosine_sim(target_vec, t5_matrix)
+                    
+                    # 5. Sonuçları DataFrame'e ekle
+                    t5_filtered["Similarity"] = scores * 100 # Yüzde cinsinden
+                    
+                    # En benzer 10 oyuncuyu getir
+                    top_matches = t5_filtered.sort_values("Similarity", ascending=False).head(10)
+                    
+                    st.success("Tarama Tamamlandı!")
+                    st.dataframe(
+                        top_matches[["Player", "Team", "League", "Age", "Similarity", "Overall_Skoru"]].style.format({"Similarity": "{:.1f}%", "Overall_Skoru": "{:.1f}"}),
+                        use_container_width=True
+                    )
+                    
+                    # En benzer oyuncu ile Radar kıyaslaması
+                    best_match = top_matches.iloc[0]
+                    st.subheader(f"En Yakın Eşleşme: {best_match['Player']} ({best_match['Team']})")
+                    
+                    fig_radar = create_radar_chart(target_player, best_match, target_player['Player'], best_match['Player'], "Scouting")
+                    st.plotly_chart(fig_radar, use_container_width=True)

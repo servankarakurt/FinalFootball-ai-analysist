@@ -1,5 +1,4 @@
 top_calma_p90
-kayarak_mudahale_p90
 uzaklastirma_p90
 ikili_mucadele_kazanma_yuzde
 hava_topu_kazanma_yuzde
@@ -9,9 +8,12 @@ dribbling_p90
 kilit_pas_p90
 ara_pas_p90
 uzun_pas_p90
-sahipsiz_top_kazanma_p90
-hava_topu_mucadele_p90
 pas_isabet_yuzde
+xG_p90_common
+xA_p90_common
+Gls_p90
+Ast_p90
+G+A_p90
 kaleci_sut_karsilama_yuzde
 kaleci_kurtaris_sayisi_p90
 kaleci_pas_isabet_yuzde
