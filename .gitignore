@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# data
+data/interim/
+data/external/*.csv
+
+# models
+models/*.npy
+
+# notebooks
+.ipynb_checkpoints/
