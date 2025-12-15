@@ -1,354 +1,400 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from tensorflow import keras
 import plotly.graph_objects as go
+import joblib
 import os
+from streamlit_option_menu import option_menu 
 
 # ---------- SAYFA AYARLARI ----------
-st.set_page_config(page_title="Futbol AI Scout Pro", page_icon="⚽", layout="wide")
+st.set_page_config(page_title="ScoutPro AI", page_icon="⚽", layout="wide")
 
+# Modern CSS Tasarımı
 st.markdown(
     """
     <style>
-    .stButton>button {
-        width: 100%;
-        background-color: #00CC66;
-        color: white;
-        font-weight: bold;
-        border-radius: 8px;
-    }
-    .metric-card {
-        background-color: #f0f2f6;
+    .main { background-color: #f8f9fa; }
+    h1, h2, h3 { font-family: 'Helvetica Neue', sans-serif; color: #1d3557; }
+    div[data-testid="stMetric"] {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
         padding: 15px;
         border-radius: 10px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
         text-align: center;
+    }
+    .stButton>button {
+        width: 100%;
+        background-color: #457b9d;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        padding: 0.5rem 1rem;
+    }
+    .stButton>button:hover {
+        background-color: #1d3557;
+    }
+    .top5-header {
+        background-color: #e63946;
+        color: white;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        text-align: center;
+        font-weight: bold;
+    }
+    .ai-report-box {
+        background-color: #e3f2fd;
+        border-left: 5px solid #1565c0;
+        padding: 20px;
+        border-radius: 8px;
+        font-family: 'Verdana', sans-serif;
+        font-size: 15px;
+        color: #0d47a1;
+        line-height: 1.6;
+    }
+    .vs-badge {
+        background-color: #d32f2f;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+        font-size: 12px;
+        margin-right: 5px;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-st.title("⚽ Futbol AI Scout & Matchup Analisti")
-st.markdown("**Gelişmiş Yapay Zeka Destekli Oyuncu Karşılaştırma ve Scouting Sistemi**")
-
-# ---------- DOSYA YOLLARI (PATHS) ----------
-# Bu yolların senin proje klasörünle birebir aynı olduğundan emin ol
+# ---------- DOSYA YOLLARI ----------
 SUPERLIG_FILE = "data/processed/superlig_scored_benchmark.csv"
 TOP5_FILE     = "data/processed/top5_players_scored.csv"
-BENCH_FILE    = "data/processed/top5_benchmarks_percentiles.csv"
-
-# Model dosya isimlerini düzelttik
-MODEL_FILE = "models/futbol_ann_ga.h5"
-SCALER_MEAN_FILE = "models/scaler_mean.npy"
-SCALER_SCALE_FILE = "models/scaler_scale.npy"
-SCALER_FEATS_FILE = "models/feature_names.txt"
+PIPELINE_FILE = "models/futbol_pipeline.pkl" 
 
 # ---------- YÜKLEME FONKSİYONLARI ----------
 @st.cache_resource
-def load_everything():
-    # Veri setlerini yükle
+def load_data_and_model():
     if not os.path.exists(SUPERLIG_FILE):
-        st.error(f"Dosya bulunamadı: {SUPERLIG_FILE}. Lütfen veri işleme adımlarını tamamlayın.")
-        return None, None, None, None, None, None, None
+        st.error(f"Veri dosyası bulunamadı: {SUPERLIG_FILE}")
+        return None, None, None, None
 
     sl = pd.read_csv(SUPERLIG_FILE)
     
-    # Top5 dosyası yoksa boş bir DataFrame oluştur (Hata vermemesi için)
     if os.path.exists(TOP5_FILE):
         t5 = pd.read_csv(TOP5_FILE)
     else:
-        t5 = pd.DataFrame() 
+        t5 = pd.DataFrame()
 
-    if os.path.exists(BENCH_FILE):
-        bench = pd.read_csv(BENCH_FILE)
+    if not os.path.exists(PIPELINE_FILE):
+        pipeline = None
+        feats = []
     else:
-        bench = pd.DataFrame()
+        try:
+            pipeline = joblib.load(PIPELINE_FILE)
+            feats = getattr(pipeline, "required_features", [])
+        except:
+            pipeline = None
+            feats = []
 
-    # Modeli ve Scaler'ı yükle
-    if not os.path.exists(MODEL_FILE):
-        st.error("Model dosyası bulunamadı. Lütfen önce '05_train_ann.py' dosyasını çalıştırın.")
-        return None, None, None, None, None, None, None
-
-    model = keras.models.load_model(MODEL_FILE, compile=False)
-    data_mean = np.load(SCALER_MEAN_FILE)
-    data_scale = np.load(SCALER_SCALE_FILE)
-    
-    with open(SCALER_FEATS_FILE, "r", encoding="utf-8") as f:
-        feats = [line.strip() for line in f.readlines()]
-
-    # UI uyumluluğu (Eski koddan kalan temizlikler)
+    # UI Uyumluluğu
     for df in [sl, t5]:
         if not df.empty:
             if "Takim" not in df.columns and "Team" in df.columns:
                 df["Takim"] = df["Team"]
             if "Pos_Simple" not in df.columns and "Pos" in df.columns:
                 df["Pos_Simple"] = df["Pos"].astype(str).str.split(",").str[0]
-            if "Rol" not in df.columns:
-                df["Rol"] = df.get("FM_Rol_Base", "")
+            if "Player" in df.columns:
+                df["TM_Link"] = "https://www.transfermarkt.com.tr/schnellsuche/ergebnis/schnellsuche?query=" + df["Player"].astype(str).str.replace(" ", "+")
 
-    return sl, t5, bench, model, feats, data_mean, data_scale
+    return sl, t5, pipeline, feats
 
-# Verileri Yükle
-loaded_data = load_everything()
-if loaded_data[0] is None:
-    st.stop() # Veri yoksa durdur
+loaded = load_data_and_model()
+if loaded[0] is None:
+    st.stop()
 
-sl, t5, bench, model, feats, data_mean, data_scale = loaded_data
+sl, t5, pipeline, feats = loaded
 
 # ---------- YARDIMCI FONKSİYONLAR ----------
+def get_prediction(player_row):
+    if pipeline is None: return 0.0
+    try:
+        input_data = {f: player_row.get(f, 0.0) for f in feats}
+        input_df = pd.DataFrame([input_data])
+        return float(pipeline.predict(input_df)[0])
+    except:
+        return 0.0
 
-def standard_transform(X: np.ndarray) -> np.ndarray:
-    # StandardScaler Formülü: (X - mean) / scale
-    # Veri eksikse (NaN) 0 kabul ediyoruz
-    X = np.nan_to_num(X, nan=0.0)
-    return (X - data_mean) / data_scale
-
-def cosine_sim(a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    # a: (d,) vektör (bizim oyuncu)
-    # b: (n,d) matris (diğer oyuncular)
+def cosine_sim(a, b):
     a = a.reshape(1, -1)
-    # Norm hesapla (sıfıra bölme hatasını önlemek için +1e-9 ekle)
     a_norm = np.linalg.norm(a, axis=1, keepdims=True) + 1e-9
     b_norm = np.linalg.norm(b, axis=1, keepdims=True) + 1e-9
-    
-    # Cosine Similarity = (A . B) / (|A| * |B|)
-    dot_product = a @ b.T
-    similarity = dot_product / (a_norm @ b_norm.T)
-    return similarity.ravel()
+    result = (a @ b.T) / (a_norm @ b_norm.T)
+    return result.flatten()
 
-def create_radar_chart(p1, p2, label1, label2, comparison_type="Genel"):
-    categories = ["Defans", "Oyun Kurucu", "Hücum", "Overall"]
+def create_radar(p1, p2, label1, label2, title):
+    cats = ["Defans", "Pas", "Fizik", "Teknik", "Hücum"]
     
-    # Verileri 0-1 arasına normalize etmek yerine direkt skorları kullanıyoruz (Zaten 0-10 aralığında scale edilmişti önceki adımlarda)
-    # Görselleştirmek için 10 üzerinden normalizasyon varsayıyoruz.
-    
-    v1 = [p1.get("Defans_Skoru",0), p1.get("OyunKurucu_Skoru",0), p1.get("Hucum_Skoru",0), p1.get("Overall_Skoru",0)]
-    v2 = [p2.get("Defans_Skoru",0), p2.get("OyunKurucu_Skoru",0), p2.get("Hucum_Skoru",0), p2.get("Overall_Skoru",0)]
+    def get_val(p, c):
+        key_map = {"Defans": "Defans_Skoru", "Pas": "Pas_Skoru", "Fizik": "Fizik_Skoru", "Teknik": "Teknik_Skoru", "Hücum": "Hucum_Skoru"}
+        val = p.get(key_map[c], 0.0)
+        return val
 
-    # Radar kapanması için başa dön
-    v1 += v1[:1]
-    v2 += v2[:1]
-    cats = categories + categories[:1]
+    v1 = [get_val(p1, c) for c in cats]
+    v2 = [get_val(p2, c) for c in cats]
+
+    v1 += v1[:1]; v2 += v2[:1]; cats += cats[:1]
 
     fig = go.Figure()
-    fig.add_trace(go.Scatterpolar(r=v1, theta=cats, fill="toself", name=label1, line_color='blue'))
-    fig.add_trace(go.Scatterpolar(r=v2, theta=cats, fill="toself", name=label2, line_color='red'))
-    
+    fig.add_trace(go.Scatterpolar(r=v1, theta=cats, fill='toself', name=label1, line_color='#1d3557'))
+    fig.add_trace(go.Scatterpolar(r=v2, theta=cats, fill='toself', name=label2, line_color='#e63946'))
     fig.update_layout(
-        polar=dict(radialaxis=dict(visible=True, range=[0, 10])), # Skorlar genelde 0-10 arası
-        showlegend=True,
-        title=f"{comparison_type} Karşılaştırması"
+        polar=dict(radialaxis=dict(visible=True, range=[0, 10])), 
+        title=dict(text=title, x=0.5),
+        margin=dict(t=50, b=50, l=50, r=50)
     )
     return fig
 
-# ---------- SEKMELER ----------
-tab1, tab2 = st.tabs(["⚔️ Matchup & Kıyaslama", "🌍 Scouting & Benzer Oyuncular"])
-
-# ==========================
-# TAB 1: MATCHUP VE KIYASLAMA
-# ==========================
-with tab1:
-    st.sidebar.header("Oyuncu Seçimi")
+# --- 🧠 YENİ: VS MODU KIYASLAMA MOTORU ---
+def generate_comparison_report(p1, p2, mode):
+    name1, name2 = p1['Player'], p2['Player']
+    team1, team2 = p1['Team'], p2['Team']
     
-    # KULLANICI İSTEĞİ: Mod Seçimi
-    mode = st.sidebar.radio(
-        "Analiz Modu Seçin:",
-        ["Aynı Mevki Kıyaslama (Örn: Stoper vs Stoper)", "Matchup Analizi (Hücumcu vs Savunmacı)"]
+    # Skorları Al
+    def get_s(p, k): return float(p.get(k, 0))
+    
+    phy1, phy2 = get_s(p1, 'Fizik_Skoru'), get_s(p2, 'Fizik_Skoru')
+    att1, att2 = get_s(p1, 'Hucum_Skoru'), get_s(p2, 'Hucum_Skoru')
+    def1, def2 = get_s(p1, 'Defans_Skoru'), get_s(p2, 'Defans_Skoru')
+    tech1, tech2 = get_s(p1, 'Teknik_Skoru'), get_s(p2, 'Teknik_Skoru')
+    pas1, pas2 = get_s(p1, 'Pas_Skoru'), get_s(p2, 'Pas_Skoru')
+    ovr1, ovr2 = get_s(p1, 'Overall_Skoru'), get_s(p2, 'Overall_Skoru')
+
+    report = f"🤖 **ScoutPro VS Analizi: {name1} vs {name2}**\n\n"
+    
+    # 1. FİZİKSEL MÜCADELE (En Önemli Kısım)
+    diff_phy = phy1 - phy2
+    if abs(diff_phy) > 1.5:
+        better = name1 if diff_phy > 0 else name2
+        worse = name2 if diff_phy > 0 else name1
+        report += f"💪 **Fiziksel Hakimiyet:** {better} ({max(phy1, phy2):.1f}), {worse} karşısında ({min(phy1, phy2):.1f}) bariz bir fiziksel üstünlüğe sahip. İkili mücadelelerde rakibini ezecektir.\n"
+    elif abs(diff_phy) > 0.5:
+        better = name1 if diff_phy > 0 else name2
+        report += f"⚖️ **Fizik:** {better} fiziksel olarak bir adım önde. Kıran kırana bir mücadele olacak.\n"
+    else:
+        report += "🤝 **Fizik:** İki oyuncu da fiziksel olarak birbirine denk. Maçın kaderini teknik detaylar belirleyecek.\n"
+
+    # 2. SENARYO ANALİZİ (Moda Göre Değişir)
+    if mode == "Hücum vs Defans":
+        # Biri Hücumcu, Biri Defansçı varsayımı
+        # Kimin ne olduğunu tahmin edelim (Basitçe MevkiGroup'tan veya skorlardan)
+        is_p1_att = att1 > def1
+        attacker = name1 if is_p1_att else name2
+        defender = name2 if is_p1_att else name1
+        att_score = att1 if is_p1_att else att2
+        def_score = def2 if is_p1_att else def1
+        
+        diff_matchup = att_score - def_score
+        
+        if diff_matchup > 1.0:
+            report += f"🔥 **Kritik Eşleşme:** {attacker}, hücum yetenekleriyle ({att_score:.1f}), {defender}'in savunma hattını ({def_score:.1f}) delip geçebilir. Savunmanın ekstra yardıma ihtiyacı olacak.\n"
+        elif diff_matchup < -1.0:
+            report += f"🧱 **Kritik Eşleşme:** {defender}, savunma disipliniyle ({def_score:.1f}), {attacker}'i sahadan silebilir. Hücum oyuncusu için zor bir maç olacak.\n"
+        else:
+            report += f"⚔️ **Kritik Eşleşme:** {attacker} ile {defender} arasındaki düello nefes kesecek. Anlık hatalar sonucu belirler.\n"
+
+    else: # Aynı Mevki Kıyaslama (Örn: İki Forvet veya İki Stoper)
+        # Teknik ve Pas Farkı
+        diff_tech = tech1 - tech2
+        if abs(diff_tech) > 1.5:
+            better = name1 if diff_tech > 0 else name2
+            report += f"🎨 **Teknik Kapasite:** {better}, top tekniği ve yaratıcılık konusunda çok daha yetenekli.\n"
+        
+        # Oyun Zekası (Pas Skoru üzerinden yorum)
+        if max(pas1, pas2) > 7.5:
+            better = name1 if pas1 > pas2 else name2
+            report += f"🧠 **Oyun Aklı:** {better}, sahadaki duruşu ve pas dağıtımıyla takımını yöneten isim.\n"
+
+    # 3. GENEL SONUÇ (Overall Kıyaslama)
+    diff_ovr = ovr1 - ovr2
+    if diff_ovr > 1.0:
+        report += f"\n🏆 **Sonuç:** **{name1}**, rakibine göre çok daha komple bir oyuncu. Bu eşleşmenin favorisi net bir şekilde o."
+    elif diff_ovr < -1.0:
+        report += f"\n🏆 **Sonuç:** **{name2}**, rakibine göre çok daha komple bir oyuncu. Bu eşleşmenin favorisi net bir şekilde o."
+    else:
+        report += f"\n⚖️ **Sonuç:** İki oyuncu da birbirine çok yakın seviyede. Günlük form durumları belirleyici olur."
+
+    return report
+
+# ---------- SOL MENÜ ----------
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/53/53283.png", width=80) 
+    st.title("ScoutPro AI")
+    
+    selected = option_menu(
+        menu_title="Menü",
+        options=["Matchup Analizi", "Global Scouting", "Hakkında"],
+        icons=["swords", "globe", "info-circle"], 
+        menu_icon="cast",
+        default_index=0,
+        styles={
+            "container": {"padding": "5px", "background-color": "#f0f2f6"},
+            "icon": {"color": "orange", "font-size": "20px"}, 
+            "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+            "nav-link-selected": {"background-color": "#457b9d"},
+        }
     )
+    st.markdown("---")
+    st.info("💡 **İpucu:** Scouting bölümünde Transfermarkt linklerine tıklayarak oyuncu profillerini inceleyebilirsiniz.")
+
+# ========================================================
+# SAYFA 1: MATCHUP ANALİZİ
+# ========================================================
+if selected == "Matchup Analizi":
+    st.subheader("⚔️ Oyuncu Karşılaştırma & Matchup")
     
-    takimlar = sorted(sl["Takim"].astype(str).unique())
+    col_settings, col_visual = st.columns([1, 2])
     
-    # --- OYUNCU SEÇİM KUTULARI ---
-    st.sidebar.subheader("1. Oyuncu (Bizim Takım)")
-    t1 = st.sidebar.selectbox("Takım 1", takimlar, index=0, key="t1")
-    p1_list = sl[sl["Takim"] == t1]["Player"].tolist()
-    p1_name = st.sidebar.selectbox("Oyuncu 1", p1_list, key="p1")
-    
-    st.sidebar.subheader("2. Oyuncu (Rakip/Kıyas)")
-    # Varsayılan olarak farklı bir takım seçilsin
-    def_idx = 1 if len(takimlar) > 1 else 0
-    t2 = st.sidebar.selectbox("Takım 2", takimlar, index=def_idx, key="t2")
-    p2_list = sl[sl["Takim"] == t2]["Player"].tolist()
-    p2_name = st.sidebar.selectbox("Oyuncu 2", p2_list, key="p2")
+    with col_settings:
+        st.markdown("### 🛠️ Ayarlar")
+        mode = st.radio("Analiz Tipi:", ["Aynı Mevki Kıyaslama", "Hücum vs Defans"], horizontal=True)
+        
+        selected_pos_filter = "Tümü"
+        if mode == "Aynı Mevki Kıyaslama":
+            st.markdown("---")
+            if "MevkiGroup" in sl.columns:
+                pos_options = sorted(sl["MevkiGroup"].astype(str).unique())
+                selected_pos_filter = st.selectbox("📌 Hangi Mevki?", ["Tümü"] + pos_options)
 
-    # Seçilen oyuncuların verilerini al
-    player1 = sl[sl["Player"] == p1_name].iloc[0]
-    player2 = sl[sl["Player"] == p2_name].iloc[0]
+        if selected_pos_filter != "Tümü":
+            sl_filtered = sl[sl["MevkiGroup"] == selected_pos_filter]
+        else:
+            sl_filtered = sl
 
-    # --- ANALİZ BUTONU ---
-    if st.button("Analizi Başlat", type="primary"):
-        st.divider()
+        teams = sorted(sl_filtered["Takim"].astype(str).unique())
         
-        col1, col2, col3 = st.columns([1, 0.2, 1])
+        st.markdown("**1. Oyuncu**")
+        t1 = st.selectbox("Takım", teams, key="t1")
+        p1_list = sl_filtered[sl_filtered["Takim"] == t1]["Player"].tolist()
+        p1_name = st.selectbox("Oyuncu", p1_list, key="p1")
         
-        # OYUNCU 1 KART
-        with col1:
-            st.subheader(f"🔵 {player1['Player']}")
-            st.caption(f"{player1['Takim']} | {player1['Pos_Simple']}")
-            st.metric("Overall Skor", f"{player1['Overall_Skoru']:.1f}")
-            st.metric("Hücum Skoru", f"{player1['Hucum_Skoru']:.1f}")
-            st.metric("Defans Skoru", f"{player1['Defans_Skoru']:.1f}")
-            
-        with col2:
-            st.markdown("<h1 style='text-align: center;'>VS</h1>", unsafe_allow_html=True)
-            
-        # OYUNCU 2 KART
-        with col3:
-            st.subheader(f"🔴 {player2['Player']}")
-            st.caption(f"{player2['Takim']} | {player2['Pos_Simple']}")
-            st.metric("Overall Skor", f"{player2['Overall_Skoru']:.1f}")
-            st.metric("Hücum Skoru", f"{player2['Hucum_Skoru']:.1f}")
-            st.metric("Defans Skoru", f"{player2['Defans_Skoru']:.1f}")
+        st.markdown("**2. Oyuncu**")
+        t2 = st.selectbox("Takım", teams, index=min(1, len(teams)-1), key="t2")
+        p2_list = sl_filtered[sl_filtered["Takim"] == t2]["Player"].tolist() or ["Veri Yok"]
+        p2_name = st.selectbox("Oyuncu", p2_list, key="p2")
+        
+        analyze_btn = st.button("🔥 Analizi Başlat")
 
-        st.divider()
-        
-        # --- MANTIKSAL ANALİZ KISMI (KULLANICI İSTEĞİ) ---
-        
-        # 1. MODEL TAHMİNİ (G+A Potansiyeli - Data Leakage Olmadan)
-        # Veriyi hazırla
-        vec1 = np.array([float(player1.get(f, 0.0)) for f in feats]).reshape(1, -1)
-        vec2 = np.array([float(player2.get(f, 0.0)) for f in feats]).reshape(1, -1)
-        
-        # Scale et (StandardScaler ile)
-        vec1_scaled = standard_transform(vec1)
-        vec2_scaled = standard_transform(vec2)
-        
-        # Tahmin
-        pred1 = float(model.predict(vec1_scaled, verbose=0)[0, 0])
-        pred2 = float(model.predict(vec2_scaled, verbose=0)[0, 0])
+    with col_visual:
+        if mode == "Aynı Mevki Kıyaslama" and selected_pos_filter != "Tümü":
+            st.markdown(f"<div class='top5-header'>🏆 Süper Lig - En İyi 5 {selected_pos_filter} (Overall)</div>", unsafe_allow_html=True)
+            top5_df = sl_filtered.sort_values("Overall_Skoru", ascending=False).head(5)
+            st.dataframe(
+                top5_df[["Player", "Team", "Overall_Skoru", "TM_Link"]],
+                column_config={
+                    "Overall_Skoru": st.column_config.ProgressColumn("Puan", format="%.1f", min_value=0, max_value=10),
+                    "TM_Link": st.column_config.LinkColumn("Profil", display_text="🔗")
+                },
+                hide_index=True, use_container_width=True
+            )
+            st.markdown("---")
 
-        # 2. SENARYOYA GÖRE DEĞERLENDİRME
-        st.subheader("📝 Yapay Zeka Analiz Raporu")
-        
-        if mode == "Aynı Mevki Kıyaslama (Örn: Stoper vs Stoper)":
-            # AYNI MEVKİ: Direkt Overall veya mevkiye özgü puana bakılır
-            st.info("Bu modda oyuncuların kendi mevkilerindeki genel performansları kıyaslanıyor.")
+        if analyze_btn and p1_name and p2_name:
+            p1 = sl[sl["Player"] == p1_name].iloc[0]
+            p2 = sl[sl["Player"] == p2_name].iloc[0]
             
-            score1 = player1["Overall_Skoru"]
-            score2 = player2["Overall_Skoru"]
+            c1, c2, c3 = st.columns([1, 0.2, 1])
+            with c1:
+                st.metric(label=p1['Player'], value=f"{p1['Overall_Skoru']:.1f}", delta="Overall")
+                st.caption(f"{p1['Takim']} | {p1['Pos_Simple']}")
+            with c2:
+                st.markdown("<h2 style='text-align: center; color: #e63946;'>VS</h2>", unsafe_allow_html=True)
+            with c3:
+                st.metric(label=p2['Player'], value=f"{p2['Overall_Skoru']:.1f}", delta="Overall")
+                st.caption(f"{p2['Takim']} | {p2['Pos_Simple']}")
             
-            diff = score1 - score2
-            if diff > 0.5:
-                st.success(f"**{player1['Player']}** daha komple bir oyuncu profili çiziyor.")
-            elif diff < -0.5:
-                st.error(f"**{player2['Player']}** bu mevkide daha üstün istatistiklere sahip.")
+            st.plotly_chart(create_radar(p1, p2, p1['Player'], p2['Player'], mode), use_container_width=True)
+            
+            # --- YAPAY ZEKA VS RAPORU ---
+            st.markdown("### 📝 Yapay Zeka Karşılaştırma Raporu")
+            comparison_text = generate_comparison_report(p1, p2, mode)
+            st.markdown(f"<div class='ai-report-box'>{comparison_text}</div>", unsafe_allow_html=True)
+            # ---------------------------
+
+        else:
+            if mode == "Aynı Mevki Kıyaslama" and selected_pos_filter == "Tümü":
+                st.info("👈 Lütfen sol menüden bir **Mevki** seçiniz.")
             else:
-                st.warning("İki oyuncu da çok benzer seviyede.")
-                
-            # Radar Grafiği (Genel)
-            fig = create_radar_chart(player1, player2, player1['Player'], player2['Player'], "Mevki Performans")
-            st.plotly_chart(fig, use_container_width=True)
+                st.info("Analiz için sol taraftan oyuncu seçip butona basınız.")
 
-        else:
-            # MATCHUP: Hücum vs Defans
-            st.info("Bu modda Oyuncu 1'in Hücum gücü ile Oyuncu 2'nin Savunma gücü çarpıştırılıyor.")
-            
-            # Matchup Skoru Hesaplama
-            # P1 Hücum - P2 Defans
-            att_power = player1["Hucum_Skoru"]
-            def_power = player2["Defans_Skoru"]
-            
-            matchup_diff = att_power - def_power
-            
-            col_res1, col_res2 = st.columns(2)
-            
-            with col_res1:
-                st.write(f"🔵 {player1['Player']} Hücum Gücü: **{att_power:.1f}**")
-                st.write(f"🔴 {player2['Player']} Defans Gücü: **{def_power:.1f}**")
-                
-                if matchup_diff > 1.5:
-                    st.success(f"🔥 **{player1['Player']}** bu eşleşmede rakibine büyük üstünlük kurabilir!")
-                elif matchup_diff < -1.5:
-                    st.error(f"🧱 **{player2['Player']}** savunmada duvar örüyor, geçmek çok zor.")
-                else:
-                    st.warning("⚖️ **Dengeli bir eşleşme.** Günlük form belirleyici olur.")
-
-                st.markdown("---")
-                st.caption(f"Yapay Zeka Tahmini (Ofansif Katkı Potansiyeli):")
-                st.caption(f"{player1['Player']}: {pred1:.2f} G+A/90 Beklentisi")
-                
-            with col_res2:
-                 # Matchup Bar
-                 fig_bar = go.Figure()
-                 fig_bar.add_trace(go.Bar(
-                     x=[att_power, def_power],
-                     y=[f"{player1['Player']} (Hücum)", f"{player2['Player']} (Defans)"],
-                     orientation='h',
-                     marker_color=['blue', 'red']
-                 ))
-                 fig_bar.update_layout(title="Matchup Güç Dengesi", xaxis_range=[0, 10])
-                 st.plotly_chart(fig_bar, use_container_width=True)
-
-# ==========================
-# TAB 2: SCOUTING (BENZER OYUNCU)
-# ==========================
-with tab2:
-    st.header("🌍 Global Scouting Ağı (Top 5 Lig)")
-    st.markdown("Süper Lig'deki bir oyuncunun Avrupa'nın 5 büyük ligindeki istatistiksel ikizlerini bulun.")
+# ========================================================
+# SAYFA 2: GLOBAL SCOUTING
+# ========================================================
+elif selected == "Global Scouting":
+    st.subheader("🌍 Avrupa Liglerinde Benzer Oyuncu Bul")
     
-    # Süper Lig'den oyuncu seç (Tab 1'den bağımsız olabilir)
-    col_scout1, col_scout2 = st.columns([1, 2])
+    col_scout_inp, col_scout_out = st.columns([1, 2])
     
-    with col_scout1:
-        team_scout = st.selectbox("Takım Seç", takimlar, key="scout_team")
-        p_scout_list = sl[sl["Takim"] == team_scout]["Player"].tolist()
-        player_scout_name = st.selectbox("Oyuncu Seç", p_scout_list, key="scout_player")
+    with col_scout_inp:
+        st.markdown("### 🎯 Hedef Oyuncu")
+        teams = sorted(sl["Takim"].astype(str).unique())
+        scout_team = st.selectbox("Takım", teams, key="s_team")
+        scout_player = st.selectbox("Oyuncu", sl[sl["Takim"] == scout_team]["Player"], key="s_player")
         
-        target_player = sl[sl["Player"] == player_scout_name].iloc[0]
+        find_btn = st.button("🔎 Benzerleri Tara")
         
-        st.markdown("### Seçilen Oyuncu")
-        st.write(f"**{target_player['Player']}**")
-        st.write(f"Mevki: {target_player['Pos_Simple']}")
-        st.metric("Süper Lig Overall", f"{target_player['Overall_Skoru']:.1f}")
+        if scout_player:
+            target = sl[sl["Player"] == scout_player].iloc[0]
+            st.markdown("---")
+            st.write(f"**Mevki:** {target.get('Pos_Simple', '-')}")
+            # YAŞ KALDIRILDI
+            st.progress(float(target['Overall_Skoru'])/10, text=f"Overall: {target['Overall_Skoru']:.1f}")
 
-    with col_scout2:
-        if t5.empty:
-            st.warning("Top 5 lig verisi (top5_players_scored.csv) bulunamadı.")
-        else:
-            if st.button("🔎 Benzer Oyuncuları Tara"):
-                with st.spinner("Avrupa veritabanı taranıyor..."):
-                    # 1. Seçilen oyuncunun feature vektörünü çıkar
-                    target_vec = np.array([float(target_player.get(f, 0.0)) for f in feats])
-                    
-                    # 2. Sadece AYNI MEVKİDEKİ oyuncularla kıyasla (Daha doğru sonuç için)
-                    target_pos_group = str(target_player["MevkiGroup"])
-                    t5_filtered = t5[t5["MevkiGroup"].astype(str) == target_pos_group].copy()
-                    
-                    if t5_filtered.empty:
-                        st.warning("Avrupa'da bu mevkide oyuncu bulunamadı, tüm veritabanı taranıyor.")
-                        t5_filtered = t5.copy()
-                    
-                    # 3. Avrupa'daki oyuncuların feature matrisini hazırla
-                    # (Burada yavaşlık olmaması için normalde önceden hesaplanmalı ama şimdilik anlık yapıyoruz)
-                    t5_matrix = []
-                    valid_indices = []
-                    
-                    for idx, row in t5_filtered.iterrows():
-                        vec = [float(row.get(f, 0.0)) for f in feats]
-                        t5_matrix.append(vec)
-                        valid_indices.append(idx)
-                        
-                    t5_matrix = np.array(t5_matrix)
-                    
-                    # 4. Cosine Similarity Hesapla
-                    scores = cosine_sim(target_vec, t5_matrix)
-                    
-                    # 5. Sonuçları DataFrame'e ekle
-                    t5_filtered["Similarity"] = scores * 100 # Yüzde cinsinden
-                    
-                    # En benzer 10 oyuncuyu getir
-                    top_matches = t5_filtered.sort_values("Similarity", ascending=False).head(10)
-                    
-                    st.success("Tarama Tamamlandı!")
-                    st.dataframe(
-                        top_matches[["Player", "Team", "League", "Age", "Similarity", "Overall_Skoru"]].style.format({"Similarity": "{:.1f}%", "Overall_Skoru": "{:.1f}"}),
-                        use_container_width=True
-                    )
-                    
-                    # En benzer oyuncu ile Radar kıyaslaması
-                    best_match = top_matches.iloc[0]
-                    st.subheader(f"En Yakın Eşleşme: {best_match['Player']} ({best_match['Team']})")
-                    
-                    fig_radar = create_radar_chart(target_player, best_match, target_player['Player'], best_match['Player'], "Scouting")
-                    st.plotly_chart(fig_radar, use_container_width=True)
+    with col_scout_out:
+        if find_btn:
+            mg = str(target.get("MevkiGroup", "MID"))
+            pool = t5[t5["MevkiGroup"].astype(str) == mg].copy() if "MevkiGroup" in t5.columns else t5.copy()
+            
+            if pool.empty:
+                st.warning("Bu mevkide Avrupa verisi bulunamadı.")
+            else:
+                sim_feats = feats if feats else ["Overall_Skoru", "Hucum_Skoru", "Defans_Skoru", "Fizik_Skoru", "Teknik_Skoru"]
+                target_vec = np.array([float(target.get(f, 0)) for f in sim_feats])
+                pool_mat = pool[sim_feats].fillna(0).values
+                for f in sim_feats: 
+                    if f not in pool.columns: pool[f] = 0.0 
+                pool_mat = pool[sim_feats].fillna(0).values
+
+                sims = cosine_sim(target_vec, pool_mat)
+                pool["Similarity"] = sims * 100
+                
+                results = pool.sort_values("Similarity", ascending=False).head(10)
+                
+                st.success(f"Avrupa veritabanında {len(pool)} {mg} oyuncusu tarandı, en benzer 10 oyuncu:")
+                
+                cols_to_show = ["Player", "Team", "League", "Age", "Similarity", "TM_Link"]
+                final_cols = [c for c in cols_to_show if c in results.columns]
+                
+                st.dataframe(
+                    results[final_cols],
+                    column_config={
+                        "TM_Link": st.column_config.LinkColumn("Transfermarkt", display_text="Profili Gör 🔗"),
+                        "Similarity": st.column_config.ProgressColumn("Benzerlik", format="%.1f%%", min_value=0, max_value=100),
+                        "Age": st.column_config.NumberColumn("Yaş", format="%d")
+                    },
+                    hide_index=True, use_container_width=True
+                )
+                
+                best = results.iloc[0]
+                st.markdown("#### 🌟 En İyi Eşleşme")
+                st.plotly_chart(create_radar(target, best, target['Player'], best['Player'], "Scout Radar"), use_container_width=True)
+
+# ========================================================
+# SAYFA 3: HAKKINDA
+# ========================================================
+elif selected == "Hakkında":
+    st.subheader("ℹ️ Proje Hakkında")
+    st.markdown("""
+    Bu proje, **Süper Lig** oyuncularını yapay zeka ve istatistiksel analiz yöntemleriyle inceleyip, 
+    Avrupa'nın 5 büyük ligindeki benzer oyuncularla eşleştirir.
+    """)
