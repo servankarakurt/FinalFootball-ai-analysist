@@ -1,0 +1,25 @@
+Player,Team,Pos,Matches,Performance_Gls_per_match,Performance_Ast_per_match,Performance_G+A_per_match,Performance_G-PK_per_match,Expected_xG_per_match,Expected_npxG_per_match,Expected_npxG+xAG_per_match,Per90_xG_per_match
+Tammy Abraham,Besiktas,FW,12.0,0.417,0.083,0.5,0.333,,,,
+El Bilal Touré,Besiktas,"MF,FW",8.0,0.25,0.25,0.5,0.25,,,,
+Jota Silva,Besiktas,FW,5.0,0.2,0.0,0.2,0.2,,,,
+Mustafa Hekimoğlu,Besiktas,FW,4.0,0.0,0.0,0.0,0.0,,,,
+Marius Mouandilmadji,Samsunspor,FW,11.0,0.182,0.0,0.182,0.091,,,,
+Emre Kılınç,Samsunspor,"MF,FW",6.0,0.0,0.167,0.167,0.0,,,,
+Cherif Ndiaye,Samsunspor,FW,5.0,0.6,0.0,0.6,0.6,,,,
+Landry Dimata,Samsunspor,"MF,FW",2.0,0.0,0.0,0.0,0.0,,,,
+Arbnor Muja,Samsunspor,"FW,MF",2.0,0.0,0.0,0.0,0.0,,,,
+Polat Yaldır,Samsunspor,FW,3.0,0.0,0.0,0.0,0.0,,,,
+Ebrima Ceesay,Samsunspor,FW,1.0,0.0,0.0,0.0,0.0,,,,
+Paul Onuachu,Trabzonspor,FW,12.0,0.667,0.083,0.75,0.5,,,,
+Felipe Augusto,Trabzonspor,"MF,FW",12.0,0.417,0.0,0.417,0.417,,,,
+Ernest Muçi,Trabzonspor,"MF,FW",8.0,0.0,0.0,0.0,0.0,,,,
+Danylo Sikan,Trabzonspor,FW,9.0,0.111,0.0,0.111,0.111,,,,
+Youssef En-Nesyri,fenerbahce,FW,17.0,0.412,0.0,0.412,0.412,0.059,0.059,0.059,0.015
+Kerem Aktürkoğlu,fenerbahce,"FW,MF",12.0,0.333,0.25,0.583,0.25,,0.075,,0.051
+Marco Asensio,fenerbahce,"MF,FW",13.0,0.462,0.154,0.615,0.462,0.008,0.008,0.031,0.004
+Nene Dorgeles,fenerbahce,"FW,DF",13.0,0.154,0.154,0.308,0.154,0.008,0.008,0.054,0.004
+Sebastian Szymański,fenerbahce,"MF,FW",16.0,0.125,0.0,0.125,0.125,0.006,0.006,0.031,0.004
+Oğuz Aydın,fenerbahce,FW,14.0,0.0,0.071,0.071,0.0,0.0,0.0,0.0,0.0
+İrfan Kahveci,fenerbahce,"MF,FW",10.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.006
+Jáder Durán,fenerbahce,FW,6.0,0.167,0.333,0.5,0.167,0.033,0.033,0.05,0.103
+Cengiz Ünder,fenerbahce,"FW,MF",1.0,0.0,0.0,0.0,0.0,,,,

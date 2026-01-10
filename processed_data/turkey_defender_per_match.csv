@@ -1,0 +1,38 @@
+Player,Team,Pos,Matches,Performance_Gls_per_match,Performance_Ast_per_match,Performance_G-PK_per_match,Expected_npxG_per_match,Expected_xAG_per_match,Progression_PrgC_per_match,Progression_PrgP_per_match,Progression_PrgR_per_match
+Emir Topçu,Besiktas,DF,8.0,0.125,0.0,0.125,,,,,
+Tiago Djaló,Besiktas,DF,7.0,0.143,0.0,0.143,,,,,
+Gökhan Sazdağı,Besiktas,DF,7.0,0.0,0.0,0.0,,,,,
+David Jurásek,Besiktas,DF,8.0,0.0,0.0,0.0,,,,,
+Ohis Felix Uduokhai,Besiktas,DF,6.0,0.0,0.0,0.0,,,,,
+Rıdvan Yılmaz,Besiktas,DF,6.0,0.0,0.0,0.0,,,,,
+Gabriel Paulista,Besiktas,DF,5.0,0.0,0.2,0.0,,,,,
+Jonas Svensson,Besiktas,DF,5.0,0.0,0.0,0.0,,,,,
+Taylan Bulut,Besiktas,DF,2.0,0.0,0.0,0.0,,,,,
+Serkan Terzi,Besiktas,DF,1.0,0.0,0.0,0.0,,,,,
+Tayyib Talha Sanuç,Besiktas,DF,1.0,0.0,0.0,0.0,,,,,
+Rick van Drongelen,Samsunspor,DF,11.0,0.182,0.0,0.182,,,,,
+Ľubomír Šatka,Samsunspor,DF,11.0,0.0,0.091,0.0,,,,,
+Logi Tómasson,Samsunspor,DF,11.0,0.0,0.182,0.0,,,,,
+Zeki Yavru,Samsunspor,DF,10.0,0.0,0.0,0.0,,,,,
+Toni Borevkovic,Samsunspor,DF,3.0,0.0,0.0,0.0,,,,,
+Soner Gönül,Samsunspor,DF,5.0,0.0,0.0,0.0,,,,,
+Stefan Savić,Trabzonspor,DF,11.0,0.091,0.091,0.091,,,,,
+Arsenii Batahov,Trabzonspor,DF,11.0,0.0,0.0,0.0,,,,,
+Mustafa Eskihellaç,Trabzonspor,DF,11.0,0.0,0.091,0.0,,,,,
+Wagner Pina,Trabzonspor,DF,11.0,0.0,0.182,0.0,,,,,
+Okay Yokuşlu,Trabzonspor,"MF,DF",9.0,0.111,0.0,0.111,,,,,
+Ozan Tufan,Trabzonspor,"MF,DF",6.0,0.0,0.0,0.0,,,,,
+Arif Boşluk,Trabzonspor,DF,9.0,0.0,0.0,0.0,,,,,
+Rayyan Baniya,Trabzonspor,DF,5.0,0.0,0.0,0.0,,,,,
+Batista Mendy,Trabzonspor,"DF,MF",2.0,0.0,0.0,0.0,,,,,
+Milan Škriniar,fenerbahce,DF,16.0,0.062,0.0,0.062,0.006,0.006,0.062,0.75,0.0
+Jayden Oosterwolde,fenerbahce,DF,16.0,0.0,0.0,0.0,0.0,0.0,0.375,1.125,0.125
+Nélson Semedo,fenerbahce,"DF,MF",14.0,0.071,0.071,0.071,0.014,0.014,0.571,1.5,0.357
+Archie Brown,fenerbahce,DF,16.0,0.125,0.062,0.125,0.0,0.013,0.75,0.75,1.25
+Nene Dorgeles,fenerbahce,"FW,DF",13.0,0.154,0.154,0.154,0.008,0.038,0.615,0.462,2.077
+Çağlar Söyüncü,fenerbahce,DF,5.0,0.0,0.2,0.0,0.0,0.0,0.0,0.2,0.0
+Levent Mercan,fenerbahce,DF,6.0,0.0,0.167,0.0,,,,,
+Mert Müldür,fenerbahce,DF,7.0,0.0,0.0,0.0,,,,,
+Yusuf Akçiçek,fenerbahce,DF,1.0,0.0,0.0,0.0,,,,,
+Rodrigo Becão,fenerbahce,DF,1.0,0.0,0.0,0.0,,,,,
+Alexander Djiku,fenerbahce,"DF,MF",1.0,0.0,0.0,0.0,,,,,
